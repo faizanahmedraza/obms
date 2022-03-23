@@ -42,7 +42,7 @@
 {{--bona dea wedding & function venue--}}
 <iframe width="100%" height="480" frameborder="0" allowfullscreen="" allow="xr-spatial-tracking" src="https://my.matterport.com/show/?m=pDfrgsnQ5H3"></iframe>
 {{--the ritz banquet--}}
-<iframe width="100%" height="583" src="http://360virtualspace.in/fnbritz/tour.html" frameborder="0" allowfullscreen=""
+<iframe width="100%" height="583" src="https://360virtualspace.in/fnbritz/tour.html" frameborder="0" allowfullscreen=""
         allow="vr" data-uw-styling-context="true">
 {{--the wedding wire--}}
 </iframe><iframe width="100%" height="583" src="https://my.matterport.com/show/?m=zWWx8ZoiD8p" frameborder="0" allowfullscreen=""
