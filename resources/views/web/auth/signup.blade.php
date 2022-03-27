@@ -11,7 +11,7 @@
             <div class="content-box clearfix">
                 <h1>Sign Up</h1>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="index-2.html">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li>Sign Up</li>
                 </ul>
             </div>
@@ -34,51 +34,64 @@
                             <div class="tab active-tab" id="tab-1">
                                 <div class="inner-box">
                                     <h4>Sign Up</h4>
-                                    <form action="{{route('web.signup.store')}}" method="POST">
+                                    <form action="{{route('web.signup.store')}}" method="post" class="default-form">
+                                        @csrf
+                                        <input type="hidden" name="role" value="vendor">
                                         <div class="form-group">
+                                            <label>Service Name</label>
+                                           <input type="text" name="service_name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="service_type">Service Type</label>
+                                            <div class="select-box">
+                                                <select id="service_type" name="service_type" class="wide">
+                                                    <option data-display="Select Type">Select Type</option>
+                                                    <option value="1">Yearly</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-top: 80px;">
                                             <label>Your Name</label>
-                                            <input type="text" name="name" required="">
+                                            <input type="text" name="name" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Email Address</label>
-                                            <input type="email" name="email" required="">
+                                            <input type="email" name="email" required>
                                         </div>
                                         <div class="form-group">
-                                            <label>New Password</label>
-                                            <input type="password" name="name" required="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Confirm Password</label>
-                                            <input type="password" name="name" required="">
+                                            <label>Contact Number</label>
+                                            <input type="text" name="name" required>
                                         </div>
                                         <div class="form-group message-btn">
                                             <button type="submit" class="theme-btn btn-one">Sign up</button>
                                         </div>
                                     </form>
                                     <div class="othre-text">
-                                        <p>Already have an account? <a href="signin.html">Sign in</a></p>
+                                        <p>Already have an account? <a href="{{route('web.signin')}}">Sign in</a></p>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab" id="tab-2">
                                 <div class="inner-box">
                                     <h4>Sign Up</h4>
-                                    <form action="" method="post" class="default-form">
+                                    <form action="{{route('web.signup.store')}}" method="post" class="default-form">
+                                        @csrf
+                                        <input type="hidden" name="role" value="customer">
                                         <div class="form-group">
-                                            <label>User name</label>
-                                            <input type="text" name="name" required="">
+                                            <label>Your Name</label>
+                                            <input type="text" name="name" required>
                                         </div>
                                         <div class="form-group">
-                                            <label>Email address</label>
-                                            <input type="email" name="email" required="">
+                                            <label>Email Address</label>
+                                            <input type="email" name="email" required>
                                         </div>
                                         <div class="form-group">
                                             <label>New Password</label>
-                                            <input type="password" name="name" required="">
+                                            <input type="password" name="name" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Confirm Password</label>
-                                            <input type="password" name="name" required="">
+                                            <input type="password" name="name" required>
                                         </div>
                                         <div class="form-group message-btn">
                                             <button type="submit" class="theme-btn btn-one">Sign up</button>

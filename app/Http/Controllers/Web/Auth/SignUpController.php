@@ -21,6 +21,8 @@ class SignUpController extends Controller
             'remember_me' => ['sometimes','nullable','boolean']
         ]);
 
+        $credentials['email'] = strtolower($request->email);
+
         if (Auth::attempt($credentials,$request->has('remember_me'))) {
             $request->session()->regenerate();
 
