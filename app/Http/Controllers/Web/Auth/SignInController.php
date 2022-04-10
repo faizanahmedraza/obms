@@ -19,17 +19,18 @@ class SignInController extends Controller
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
-            'remember_me' => ['sometimes','nullable','boolean']
+            'remember_me' => ['sometimes', 'nullable', 'boolean']
         ]);
 
-        if (Auth::attempt($credentials,$request->has('remember_me'))) {
+        if (Auth::attempt($credentials, $request->has('remember_me'))) {
             $request->session()->regenerate();
 
-            if(Str::contains($request->url(),'vendor'))
-            {
+            if (Auth::user()->hasRole('Vendor')) {
                 return redirect()->intended('vendor/home');
+            } else if(Auth::user()->hasRole('Vendor')) {
+                return redirect()->intended('venue/home');
             } else {
-                return redirect()->intended('user/home');
+               return back()->withErrors(['errors' => 'Invalid Credentials!']);
             }
         }
 

@@ -25,12 +25,12 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 $url = $request->url();
-                if (Str::contains($url, 'admin')) {
+                if (Str::contains($url, 'admin') && !Auth::user()->hasRole(['Vendor', 'Venue'])) {
                     return redirect()->route('admin.home');
-                } else if (Str::contains($url, 'vendor')) {
+                } else if (Str::contains($url, 'vendor') && Auth::user()->hasRole('Vendor')) {
                     return redirect()->route('vendor.home');
-                } else {
-                    return redirect()->route('user.home');
+                } else if (Str::contains($url, 'venue') && Auth::user()->hasRole('Venue')) {
+                    return redirect()->route('venue.home');
                 }
             }
         }

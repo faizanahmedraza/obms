@@ -1,5 +1,13 @@
 @extends('web.layouts.master')
 
+@push('styles')
+    <style>
+        .main-footer {
+            z-index: -1 !important;
+        }
+    </style>
+@endpush
+
 @section('content')
     <!--Page Title-->
     <section class="page-title-two bg-color-1 centred">
@@ -26,41 +34,51 @@
                     <div class="tabs-box">
                         <div class="tab-btn-box">
                             <ul class="tab-btns tab-buttons centred clearfix">
-                                <li class="tab-btn active-btn" data-tab="#tab-1">Vendor</li>
-                                <li class="tab-btn" data-tab="#tab-2">User</li>
+                                <li class="tab-btn {{ ((session()->has('active_key') && session()->get('active_key') === "web.vendor.signup.store") || !session()->has('active_key')) ? 'active-btn' : ''  }}" data-tab="#tab-1">Vendor</li>
+                                <li class="tab-btn {{ (session()->has('active_key') && session()->get('active_key') === "web.venue.signup.store") ? 'active-btn' : '' }}" data-tab="#tab-2">Venue</li>
                             </ul>
                         </div>
                         <div class="tabs-content">
-                            <div class="tab active-tab" id="tab-1">
+                            <div class="tab {{ ((session()->has('active_key') && session()->get('active_key') === "web.vendor.signup.store") || !session()->has('active_key')) ? 'active-tab' : '' }}" id="tab-1">
                                 <div class="inner-box">
                                     <h4>Sign Up</h4>
-                                    <form action="{{route('web.signup.store')}}" method="post" class="default-form">
+                                    <form action="{{route('web.vendor.signup.store')}}" method="post" class="default-form">
                                         @csrf
-                                        <input type="hidden" name="role" value="vendor">
+                                        @if ((session()->has('active_key') && session()->get('active_key') === "web.vendor.signup.store") && $errors->any())
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                <strong>Whoops!</strong>
+                                                <ul class="text-left">
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                                <button type="button" class="close" data-dismiss="alert"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        @endif
+                                        <input type="hidden" name="role" value="Vendor">
                                         <div class="form-group">
                                             <label>Service Name</label>
-                                           <input type="text" name="service_name">
+                                            <input type="text" name="service_name" value="{{old('service_name')}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="service_type">Service Type</label>
-                                            <div class="select-box">
-                                                <select id="service_type" name="service_type" class="wide">
-                                                    <option data-display="Select Type">Select Type</option>
-                                                    <option value="1">Yearly</option>
-                                                </select>
-                                            </div>
+                                            <select id="service_type" name="service_type" class="wide">
+                                                <option data-display="Select Type">Select Type</option>
+                                                @foreach($vendors as $vendor)
+                                                    <option value="{{old('service_type',$vendor)}}">{{ucwords(str_replace(['_and_','_'],['/',' '],$vendor))}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group" style="margin-top: 80px;">
-                                            <label>Your Name</label>
-                                            <input type="text" name="name" required>
+                                            <label for="email_vendor">Email Address</label>
+                                            <input id="email_vendor" type="email" name="email_vendor" value="{{old('email_vendor')}}" required>
                                         </div>
                                         <div class="form-group">
-                                            <label>Email Address</label>
-                                            <input type="email" name="email" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Contact Number</label>
-                                            <input type="text" name="name" required>
+                                            <label for="contact_vendor">Contact Number</label>
+                                            <input id="contact_vendor" type="number" name="contact_number_vendor" value="{{old('contact_number_vendor')}}" required>
                                         </div>
                                         <div class="form-group message-btn">
                                             <button type="submit" class="theme-btn btn-one">Sign up</button>
@@ -71,27 +89,48 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab" id="tab-2">
+                            <div class="tab {{ (session()->has('active_key') && session()->get('active_key') === "web.venue.signup.store") ? 'active-tab' : '' }}" id="tab-2">
                                 <div class="inner-box">
                                     <h4>Sign Up</h4>
-                                    <form action="{{route('web.signup.store')}}" method="post" class="default-form">
+                                    <form action="{{route('web.venue.signup.store')}}" method="post" class="default-form">
                                         @csrf
-                                        <input type="hidden" name="role" value="customer">
+                                        @if ((session()->has('active_key') && session()->get('active_key') === "web.venue.signup.store") && $errors->any())
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                <strong>Whoops!</strong>
+                                                <ul class="text-left">
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                                <button type="button" class="close" data-dismiss="alert"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        @endif
+                                        <input type="hidden" name="role" value="Venue">
                                         <div class="form-group">
-                                            <label>Your Name</label>
-                                            <input type="text" name="name" required>
+                                            <label>Venue Name</label>
+                                            <input type="text" name="venue_name" value="{{old('venue_name')}}" required>
                                         </div>
                                         <div class="form-group">
-                                            <label>Email Address</label>
-                                            <input type="email" name="email" required>
+                                            <label for="venue_type">Venue Type</label>
+                                            <div class="select-box">
+                                                <select id="service_type" name="venue_type" class="wide">
+                                                    <option data-display="Select Type">Select Type</option>
+                                                    @foreach($venues as $venue)
+                                                        <option value="{{old('venue_type',$venue)}}">{{ucwords(str_replace('_',' ',$venue))}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-top: 80px;">
+                                            <label for="email_venue">Email Address</label>
+                                            <input id="email_venue" type="email" name="email_venue" value="{{old('email_venue')}}" required>
                                         </div>
                                         <div class="form-group">
-                                            <label>New Password</label>
-                                            <input type="password" name="name" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Confirm Password</label>
-                                            <input type="password" name="name" required>
+                                            <label for="contact_venue">Contact Number</label>
+                                            <input id="contact_venue" type="number" name="contact_number_venue" value="{{old('contact_number_venue')}}" required>
                                         </div>
                                         <div class="form-group message-btn">
                                             <button type="submit" class="theme-btn btn-one">Sign up</button>

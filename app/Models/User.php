@@ -14,7 +14,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    const PRIVATE_ROLES = ['Super Admin','Admin','Vendor','User'];
+    const PRIVATE_ROLES = ['Super Admin','Admin','Vendor','Venue','Customer'];
 
     /**
      * The attributes that are mass assignable.
@@ -25,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'contact_number'
     ];
 
     /**
@@ -46,6 +47,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dates = [
+        'blocked_until'
+    ];
+
     public function getAvatarAttribute($value)
     {
         if(Str::contains($value,['facebook','google']))
@@ -53,5 +58,15 @@ class User extends Authenticatable
             return $value;
         }
         return asset($value ? 'storage/'.$value : '/assets/images/default-avatar.png');
+    }
+
+    public function venue()
+    {
+        return $this->hasOne(Venue::class,'user_id','id');
+    }
+
+    public function vendor()
+    {
+        return $this->hasOne(Vendor::class,'user_id','id');
     }
 }

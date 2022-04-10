@@ -35,7 +35,8 @@ Route::group(['namespace' => 'Web', 'as' => 'web.'], function () {
             Route::get('/signin', 'SignInController@index')->name('signin');
             Route::post('/signin', 'SignInController@store')->name('signin.store');
             Route::get('/signup', 'SignUpController@index')->name('signup');
-            Route::post('/signup', 'SignUpController@store')->name('signup.store');
+            Route::post('/vendor/signup', 'SignUpController@store')->name('vendor.signup.store');
+            Route::post('/venue/signup', 'SignUpController@store')->name('venue.signup.store');
             Route::resource('forgot-password', 'ForgotPasswordController',
                 [
                     'only' => [
@@ -178,8 +179,8 @@ Route::group(['namespace' => 'Cms'], function () {
         });
     });
 
-    //User Section
-    Route::group(['namespace' => 'User', 'prefix' => 'user/', 'as' => 'user.'], function () {
+    //Venue Section
+    Route::group(['namespace' => 'Venue', 'prefix' => 'venue/', 'as' => 'venue.'], function () {
         //Protected Routes
         Route::group(['middleware' => ['auth', 'check.blocked']], function () {
             Route::get('/home', 'HomeController')->name('home');

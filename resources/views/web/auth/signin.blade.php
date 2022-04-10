@@ -27,6 +27,30 @@
                         <h4>Sign in</h4>
                         <form action="{{route('web.signin.store')}}" method="POST"
                               class="default-form">
+                            @csrf
+                            @if (session()->has('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Whoops!</strong> {{session()->get('error')}}
+                                    <button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+                            @if ($errors->any())
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Whoops!</strong>
+                                    <ul class="text-left">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
                             <div class="form-group">
                                 <label>Email Address</label>
                                 <input type="email" name="email" required="">
