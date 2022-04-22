@@ -29,6 +29,19 @@ Route::get('/contact-us', 'ContactUsController@index')->name('contact_us');
 Route::group(['namespace' => 'Web', 'as' => 'web.'], function () {
     Route::get('/', 'HomeController')->name('home');
 
+    Route::group(['namespace' => 'Venues','prefix' => 'venues'], function () {
+        Route::get('/banquets', 'BanquetController@index')->name('banquets');
+        Route::get('/banquets/{id}', 'BanquetController@show')->name('banquets.details');
+        Route::get('/lawns', 'LawnController@index')->name('lawns');
+        Route::get('/lawns/{id}', 'LawnController@show')->name('lawns.details');
+        Route::get('/hotels', 'HotelController@index')->name('hotels');
+        Route::get('/hotels/{id}', 'HotelController@show')->name('hotels.details');
+        Route::get('/marriage-halls', 'MarriageController@index')->name('marriage.halls');
+        Route::get('/marriage-halls/{id}', 'MarriageController@show')->name('marriage.halls.details');
+        Route::get('/resorts', 'ResortController@index')->name('resorts');
+        Route::get('/resorts/{id}', 'ResortController@show')->name('resorts.details');
+    });
+
     //Authentication and Authorization
     Route::group(['namespace' => 'Auth'], function () {
         Route::group(['middleware' => 'guest'], function () {
@@ -128,23 +141,23 @@ Route::group(['namespace' => 'Cms'], function () {
                 Route::get('/email/verify/{id}/{hash}', 'EmailVerificationController@verifyEmail')->middleware('signed')->name('verification.verify');
                 Route::post('/email/verification-notification', 'EmailVerificationController@resendEmailNotification')->middleware('throttle:6,1')->name('verification.send');
 
-                Route::get('/admin-users',function (){
-                    $admins  = \App\Models\User::with('roles')->whereHas('roles',function ($q){
-                       $q->whereIn('name',['Super Admin','Admin']);
+                Route::get('/admin-users', function () {
+                    $admins = \App\Models\User::with('roles')->whereHas('roles', function ($q) {
+                        $q->whereIn('name', ['Super Admin', 'Admin']);
                     });
-                    return view('cms.admin.user-management.admins.index',compact('admins'));
+                    return view('cms.admin.user-management.admins.index', compact('admins'));
                 });
-                Route::get('/customers',function (){
-                    $users  = \App\Models\User::with('roles')->whereHas('roles',function ($q){
-                        $q->where('name','Customer');
+                Route::get('/customers', function () {
+                    $users = \App\Models\User::with('roles')->whereHas('roles', function ($q) {
+                        $q->where('name', 'Customer');
                     });
-                    return view('cms.admin.user-management.users.index',compact('users'));
+                    return view('cms.admin.user-management.users.index', compact('users'));
                 });
-                Route::get('/vendors',function (){
-                    $vendors  = \App\Models\User::with('roles')->whereHas('roles',function ($q){
-                        $q->where('name','Vendor');
+                Route::get('/vendors', function () {
+                    $vendors = \App\Models\User::with('roles')->whereHas('roles', function ($q) {
+                        $q->where('name', 'Vendor');
                     });
-                    return view('cms.admin.user-management.vendors.index',compact('vendors'));
+                    return view('cms.admin.user-management.vendors.index', compact('vendors'));
                 });
             });
         });

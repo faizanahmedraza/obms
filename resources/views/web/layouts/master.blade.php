@@ -130,14 +130,14 @@
                                     <figure class="post-thumb"><a href=""><img
                                                     src="{{ asset('assets/web/images/resource/footer-post-1.jpg') }}" alt=""></a>
                                     </figure>
-                                    <h5><a href="">The Added Value Social Worker</a></h5>
+                                    <h5><a href="">To Join OBMS As A Vendor</a></h5>
                                     <p>Mar 25, 2020</p>
                                 </div>
                                 <div class="post">
                                     <figure class="post-thumb"><a href=""><img
                                                     src="{{ asset('assets/web/images/resource/footer-post-2.jpg') }}" alt=""></a>
                                     </figure>
-                                    <h5><a href="">Ways to Increase Trust</a></h5>
+                                    <h5><a href="">Ways to Increase Earnings on your business</a></h5>
                                     <p>Mar 24, 2020</p>
                                 </div>
                             </div>
@@ -150,12 +150,11 @@
                             </div>
                             <div class="widget-content">
                                 <ul class="info-list clearfix">
-                                    <li><i class="fas fa-map-marker-alt"></i>Flat 20, Reynolds Neck, North Helenaville,
-                                        FV77 8WS
+                                    <li><i class="fas fa-map-marker-alt"></i>BUKC Karachi, Sindh
                                     </li>
-                                    <li><i class="fas fa-microphone"></i><a href="tel:23055873407">+2(305) 587-3407</a>
+                                    <li><i class="fas fa-microphone"></i><a href="tel:23055873407">+92-332-5774617</a>
                                     </li>
-                                    <li><i class="fas fa-envelope"></i><a href="mailto:info@example.com">info@example.com</a>
+                                    <li><i class="fas fa-envelope"></i><a href="mailto:info@example.com">info@obms.com</a>
                                     </li>
                                 </ul>
                             </div>

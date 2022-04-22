@@ -8,10 +8,10 @@
     <section class="page-title centred" style="background-image: url(/assets/web/images/background/page-title.jpg);">
         <div class="auto-container">
             <div class="content-box clearfix">
-                <h1>Lawns View</h1>
+                <h1>Banquets View</h1>
                 <ul class="bread-crumb clearfix">
                     <li><a href="">Home</a></li>
-                    <li>Lawns List View</li>
+                    <li>Banquets List View</li>
                 </ul>
             </div>
         </div>
@@ -26,12 +26,12 @@
                     <div class="default-sidebar agent-sidebar">
                         <div class="agents-search sidebar-widget">
                             <div class="widget-title">
-                                <h5>Find Venue</h5>
+                                <h5>Find Banquet</h5>
                             </div>
                             <div class="search-inner">
                                 <form action="">
                                     <div class="form-group">
-                                        <input type="text" name="name" placeholder="Enter Venue Name" required="">
+                                        <input type="text" name="name" placeholder="Enter Banquet Name" required="">
                                     </div>
                                     <div class="form-group">
                                         <div class="select-box">
@@ -56,14 +56,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button class="theme-btn btn-one">Search Venue</button>
+                                        <button class="theme-btn btn-one">Search Banquet</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                         <div class="category-widget sidebar-widget">
                             <div class="widget-title">
-                                <h5>Status Of Lawn</h5>
+                                <h5>Status Of Banquet</h5>
                             </div>
                             <ul class="category-list clearfix">
                                 <li><a href="">For Persons <span>(200)</span></a></li>
@@ -104,8 +104,8 @@
                                         <div class="content-box">
                                             <div class="upper clearfix">
                                                 <div class="title-inner pull-left">
-                                                    <h4><a href="{{route('web.lawns.details',['id' => 1])}}">Lawn Arbat</a></h4>
-                                                    <span class="designation">Venue</span>
+                                                    <h4><a href="{{route('web.banquets.details',['id' => 1])}}">Banquet Arbat</a></h4>
+                                                    <span class="designation">Banquet</span>
                                                 </div>
                                                 <ul class="social-list pull-right clearfix">
                                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -135,8 +135,8 @@
                                         <div class="content-box">
                                             <div class="upper clearfix">
                                                 <div class="title-inner pull-left">
-                                                    <h4><a href="">Diamond Conference Venue</a></h4>
-                                                    <span class="designation">Venue</span>
+                                                    <h4><a href="">Diamond Conference Banquet</a></h4>
+                                                    <span class="designation">Banquet</span>
                                                 </div>
                                                 <ul class="social-list pull-right clearfix">
                                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -166,8 +166,8 @@
                                         <div class="content-box">
                                             <div class="upper clearfix">
                                                 <div class="title-inner pull-left">
-                                                    <h4><a href="">Lawn Hall</a></h4>
-                                                    <span class="designation">Venue</span>
+                                                    <h4><a href="">Banquet Hall</a></h4>
+                                                    <span class="designation">Banquet</span>
                                                 </div>
                                                 <ul class="social-list pull-right clearfix">
                                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -199,7 +199,7 @@
                                             <div class="upper clearfix">
                                                 <div class="title-inner pull-left">
                                                     <h4><a href="">Red Bar Wedding</a></h4>
-                                                    <span class="designation">Venue</span>
+                                                    <span class="designation">Banquet</span>
                                                 </div>
                                                 <ul class="social-list pull-right clearfix">
                                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -230,7 +230,7 @@
                                             <div class="upper clearfix">
                                                 <div class="title-inner pull-left">
                                                     <h4><a href="">Bona Dea Wedding</a></h4>
-                                                    <span class="designation">Venue</span>
+                                                    <span class="designation">Banquet</span>
                                                 </div>
                                                 <ul class="social-list pull-right clearfix">
                                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -261,8 +261,8 @@
                                         <div class="content-box">
                                             <div class="upper clearfix">
                                                 <div class="title-inner pull-left">
-                                                    <h4><a href="">Venuedeal</a></h4>
-                                                    <span class="designation">Venue</span>
+                                                    <h4><a href="">Banquetdeal</a></h4>
+                                                    <span class="designation">Banquet</span>
                                                 </div>
                                                 <ul class="social-list pull-right clearfix">
                                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -297,7 +297,7 @@
                                                 <div class="content-box">
                                                     <div class="title-inner">
                                                         <h4><a href="">Realhome Estate</a></h4>
-                                                        <span class="designation">Venue</span>
+                                                        <span class="designation">Banquet</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>Get the oars in the water and start rowing execution.</p>
@@ -322,8 +322,8 @@
                                                 <figure class="image-box"><img src="{{asset('assets/web/images/venues/102.jpg')}}" style="width: 270px!important; height: 330px!important;" alt=""></figure>
                                                 <div class="content-box">
                                                     <div class="title-inner">
-                                                        <h4><a href="">Housetlk Venue</a></h4>
-                                                        <span class="designation">Venue</span>
+                                                        <h4><a href="">Housetlk Banquet</a></h4>
+                                                        <span class="designation">Banquet</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>Get the oars in the water and start rowing execution.</p>
@@ -349,7 +349,7 @@
                                                 <div class="content-box">
                                                     <div class="title-inner">
                                                         <h4><a href="">Home & Garden</a></h4>
-                                                        <span class="designation">Venue</span>
+                                                        <span class="designation">Banquet</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>Get the oars in the water and start rowing execution.</p>
@@ -374,8 +374,8 @@
                                                 <figure class="image-box"><img src="{{asset('assets/web/images/venues/104.jpg')}}" style="width: 270px!important; height: 330px!important;" alt=""></figure>
                                                 <div class="content-box">
                                                     <div class="title-inner">
-                                                        <h4><a href="">Venue Company</a></h4>
-                                                        <span class="designation">Venue</span>
+                                                        <h4><a href="">Banquet Company</a></h4>
+                                                        <span class="designation">Banquet</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>Get the oars in the water and start rowing execution.</p>
@@ -401,7 +401,7 @@
                                                 <div class="content-box">
                                                     <div class="title-inner">
                                                         <h4><a href="">Realty Investment</a></h4>
-                                                        <span class="designation">Venue</span>
+                                                        <span class="designation">Banquet</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>Get the oars in the water and start rowing execution.</p>
@@ -426,8 +426,8 @@
                                                 <figure class="image-box"><img src="{{asset('assets/web/images/venues/106.jpg')}}" style="width: 270px!important; height: 330px!important;" alt=""></figure>
                                                 <div class="content-box">
                                                     <div class="title-inner">
-                                                        <h4><a href="">Ritz Lawn</a></h4>
-                                                        <span class="designation">Venue</span>
+                                                        <h4><a href="">Ritz Banquet</a></h4>
+                                                        <span class="designation">Banquet</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>Get the oars in the water and start rowing execution.</p>

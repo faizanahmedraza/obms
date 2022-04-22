@@ -43,16 +43,16 @@
                     <nav class="main-menu navbar-expand-md navbar-light">
                         <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
                             <ul class="navigation clearfix">
-                                <li class="dropdown"><a href="{{route('venues')}}"><span>Venues</span></a>
+                                <li class="dropdown"><a href=""><span>Venues</span></a>
                                     <ul>
-                                        <li><a href="">Lawns</a></li>
-                                        <li><a href="">Hotels</a></li>
-                                        <li><a href="">Resorts</a></li>
-                                        <li><a href="">Banquet Halls</a></li>
-                                        <li><a href="">Marriage Halls</a></li>
+                                        <li><a href="{{route('web.lawns')}}">Lawns</a></li>
+                                        <li><a href="{{route('web.hotels')}}">Hotels</a></li>
+                                        <li><a href="{{route('web.resorts')}}">Resorts</a></li>
+                                        <li><a href="{{route('web.banquets')}}">Banquet Halls</a></li>
+                                        <li><a href="{{route('web.marriage.halls')}}">Marriage Halls</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown"><a href="{{route('events')}}"><span>Events</span></a>
+                                <li class="dropdown"><a href=""><span>Events</span></a>
                                     <ul>
                                         <li><a href="">Engagements</a></li>
                                         <li><a href="">Weddings</a></li>
@@ -63,7 +63,7 @@
                                         <li><a href="">Holiday Parties</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown"><a href="{{route('vendors')}}"><span>Vendors</span></a>
+                                <li class="dropdown"><a href=""><span>Vendors</span></a>
                                     <ul>
                                         <li><a href="">Food</a></li>
                                         <li><a href="">Makeup</a></li>

@@ -26,12 +26,12 @@
                     <div class="default-sidebar agent-sidebar">
                         <div class="agents-search sidebar-widget">
                             <div class="widget-title">
-                                <h5>Find Venue</h5>
+                                <h5>Find Marriage Hall</h5>
                             </div>
                             <div class="search-inner">
                                 <form action="">
                                     <div class="form-group">
-                                        <input type="text" name="name" placeholder="Enter Venue Name" required="">
+                                        <input type="text" name="name" placeholder="Enter Marriage Hall Name" required="">
                                     </div>
                                     <div class="form-group">
                                         <div class="select-box">
@@ -56,14 +56,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button class="theme-btn btn-one">Search Venue</button>
+                                        <button class="theme-btn btn-one">Search Marriage Hall</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                         <div class="category-widget sidebar-widget">
                             <div class="widget-title">
-                                <h5>Status Of Lawn</h5>
+                                <h5>Status Of Marriage Hall</h5>
                             </div>
                             <ul class="category-list clearfix">
                                 <li><a href="">For Persons <span>(200)</span></a></li>
@@ -104,8 +104,8 @@
                                         <div class="content-box">
                                             <div class="upper clearfix">
                                                 <div class="title-inner pull-left">
-                                                    <h4><a href="{{route('web.lawns.details',['id' => 1])}}">Lawn Arbat</a></h4>
-                                                    <span class="designation">Venue</span>
+                                                    <h4><a href="{{route('web.marriage.halls.details',['id' => 1])}}">Lawn Arbat</a></h4>
+                                                    <span class="designation">Marriage Hall</span>
                                                 </div>
                                                 <ul class="social-list pull-right clearfix">
                                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -119,7 +119,7 @@
                                             </div>
                                             <ul class="info clearfix">
                                                 <li><i class="fab fa fa-envelope"></i><a
-                                                            href="mailto:info@realhome.com">info@arbatlawn.com</a></li>
+                                                            href="mailto:info@realhome.com">info@arbatMarriagehall.com</a></li>
                                                 <li><i class="fab fa fa-phone"></i><a href="tel:03030571965">030 3057
                                                         1965</a></li>
                                             </ul>
@@ -135,8 +135,8 @@
                                         <div class="content-box">
                                             <div class="upper clearfix">
                                                 <div class="title-inner pull-left">
-                                                    <h4><a href="">Diamond Conference Venue</a></h4>
-                                                    <span class="designation">Venue</span>
+                                                    <h4><a href="">Diamond Conference Marriage Hall</a></h4>
+                                                    <span class="designation">Marriage Hall</span>
                                                 </div>
                                                 <ul class="social-list pull-right clearfix">
                                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -167,7 +167,7 @@
                                             <div class="upper clearfix">
                                                 <div class="title-inner pull-left">
                                                     <h4><a href="">Lawn Hall</a></h4>
-                                                    <span class="designation">Venue</span>
+                                                    <span class="designation">Marriage Hall</span>
                                                 </div>
                                                 <ul class="social-list pull-right clearfix">
                                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -181,7 +181,7 @@
                                             </div>
                                             <ul class="info clearfix">
                                                 <li><i class="fab fa fa-envelope"></i><a
-                                                            href="mailto:info@homegarden.com">info@lawnhall.com</a>
+                                                            href="mailto:info@homegarden.com">info@Marriage Hallhall.com</a>
                                                 </li>
                                                 <li><i class="fab fa fa-phone"></i><a href="tel:03030571965">030 3057
                                                         1965</a></li>
@@ -199,7 +199,7 @@
                                             <div class="upper clearfix">
                                                 <div class="title-inner pull-left">
                                                     <h4><a href="">Red Bar Wedding</a></h4>
-                                                    <span class="designation">Venue</span>
+                                                    <span class="designation">Marriage Hall</span>
                                                 </div>
                                                 <ul class="social-list pull-right clearfix">
                                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -230,7 +230,7 @@
                                             <div class="upper clearfix">
                                                 <div class="title-inner pull-left">
                                                     <h4><a href="">Bona Dea Wedding</a></h4>
-                                                    <span class="designation">Venue</span>
+                                                    <span class="designation">Marriage Hall</span>
                                                 </div>
                                                 <ul class="social-list pull-right clearfix">
                                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -261,8 +261,8 @@
                                         <div class="content-box">
                                             <div class="upper clearfix">
                                                 <div class="title-inner pull-left">
-                                                    <h4><a href="">Venuedeal</a></h4>
-                                                    <span class="designation">Venue</span>
+                                                    <h4><a href="">Marriage Halldeal</a></h4>
+                                                    <span class="designation">Marriage Hall</span>
                                                 </div>
                                                 <ul class="social-list pull-right clearfix">
                                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -297,7 +297,7 @@
                                                 <div class="content-box">
                                                     <div class="title-inner">
                                                         <h4><a href="">Realhome Estate</a></h4>
-                                                        <span class="designation">Venue</span>
+                                                        <span class="designation">Marriage Hall</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>Get the oars in the water and start rowing execution.</p>
@@ -322,8 +322,8 @@
                                                 <figure class="image-box"><img src="{{asset('assets/web/images/venues/102.jpg')}}" style="width: 270px!important; height: 330px!important;" alt=""></figure>
                                                 <div class="content-box">
                                                     <div class="title-inner">
-                                                        <h4><a href="">Housetlk Venue</a></h4>
-                                                        <span class="designation">Venue</span>
+                                                        <h4><a href="">Housetlk Marriage Hall</a></h4>
+                                                        <span class="designation">Marriage Hall</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>Get the oars in the water and start rowing execution.</p>
@@ -349,7 +349,7 @@
                                                 <div class="content-box">
                                                     <div class="title-inner">
                                                         <h4><a href="">Home & Garden</a></h4>
-                                                        <span class="designation">Venue</span>
+                                                        <span class="designation">Marriage Hall</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>Get the oars in the water and start rowing execution.</p>
@@ -374,8 +374,8 @@
                                                 <figure class="image-box"><img src="{{asset('assets/web/images/venues/104.jpg')}}" style="width: 270px!important; height: 330px!important;" alt=""></figure>
                                                 <div class="content-box">
                                                     <div class="title-inner">
-                                                        <h4><a href="">Venue Company</a></h4>
-                                                        <span class="designation">Venue</span>
+                                                        <h4><a href="">Marriage Hall Company</a></h4>
+                                                        <span class="designation">Marriage Hall</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>Get the oars in the water and start rowing execution.</p>
@@ -401,7 +401,7 @@
                                                 <div class="content-box">
                                                     <div class="title-inner">
                                                         <h4><a href="">Realty Investment</a></h4>
-                                                        <span class="designation">Venue</span>
+                                                        <span class="designation">Marriage Hall</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>Get the oars in the water and start rowing execution.</p>
@@ -427,14 +427,14 @@
                                                 <div class="content-box">
                                                     <div class="title-inner">
                                                         <h4><a href="">Ritz Lawn</a></h4>
-                                                        <span class="designation">Venue</span>
+                                                        <span class="designation">Marriage Hall</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>Get the oars in the water and start rowing execution.</p>
                                                     </div>
                                                     <ul class="info clearfix">
                                                         <li><i class="fab fa fa-envelope"></i><a
-                                                                    href="mailto:info@propertydeal.com">info@ritzlawn.com</a>
+                                                                    href="mailto:info@propertydeal.com">info@ritzMarriage Hall.com</a>
                                                         </li>
                                                         <li><i class="fab fa fa-phone"></i><a href="tel:03030571965">030
                                                                 3057 1965</a></li>
