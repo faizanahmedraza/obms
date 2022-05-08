@@ -9,6 +9,6 @@ class HomeController extends Controller
 {
     public function __invoke()
     {
-        return "venue";
+        return view('cms.user.index');
     }
 }

@@ -10,6 +10,6 @@ class HomeController extends Controller
 {
     public function __invoke()
     {
-        return view('cms.admin.index');
+        return view('cms.user.index');
     }
 }
