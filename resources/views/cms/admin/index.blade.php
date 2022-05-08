@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid dashboard-default-sec">
         <div class="row">
-            <div class="col-xl-5 box-col-12 des-xl-100">
+            <div class="col-xl-12 box-col-12 des-xl-100">
                 <div class="row">
                     <div class="col-xl-12 col-md-12 box-col-12 des-xl-100">
                         <div class="card profile-greeting">
