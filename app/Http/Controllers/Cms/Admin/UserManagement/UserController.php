@@ -14,14 +14,17 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    function __construct()
+    private $module;
+
+    public function __construct()
     {
-        $this->middleware('permission:admin.users.index|admin.users.create|admin.users.edit|admin.users.show|admin.users.destroy|admin.users.blocked', ['only' => ['index']]);
-        $this->middleware('permission:admin.users.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:admin.users.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:admin.users.show', ['only' => ['show']]);
-        $this->middleware('permission:admin.users.destroy', ['only' => ['destroy']]);
-        $this->middleware('permission:admin.users.blocked', ['only' => ['blocked']]);
+        $this->module = 'user_management';
+        $ULP = '|' . $this->module . '_all|access_all'; //UPPER LEVEL PERMISSIONS
+        $this->middleware('permission:' . $this->module . '_read' . $ULP, ['only' => ['index', 'show']]);
+        $this->middleware('permission:' . $this->module . '_create' . $ULP, ['only' => ['create','store']]);
+        $this->middleware('permission:' . $this->module . '_update' . $ULP, ['only' => ['edit','update']]);
+        $this->middleware('permission:' . $this->module . '_delete' . $ULP, ['only' => ['destroy']]);
+        $this->middleware('permission:' . $this->module . '_blocked' . $ULP, ['only' => ['blocked']]);
     }
 
     public function index()

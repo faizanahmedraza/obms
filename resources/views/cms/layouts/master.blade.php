@@ -114,7 +114,8 @@
 <!-- Plugins JS Ends-->
 <!-- Theme js-->
 <script src="{{ asset('assets/cms/js/script.js') }}"></script>
-<script src="{{ asset('assets/cms/js/theme-customizer/customizer.js') }}"></script>
+<!-- Theme Customizer -->
+{{--<script src="{{ asset('assets/cms/js/theme-customizer/customizer.js') }}"></script>--}}
 <!-- Custom Scripts-->
 @stack('scripts')
 </body>

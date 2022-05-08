@@ -10,6 +10,6 @@ class HomeController extends Controller
 {
     public function __invoke()
     {
-        return "vendor";
+        return view('cms.admin.index');
     }
 }

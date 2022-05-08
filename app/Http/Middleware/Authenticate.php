@@ -19,7 +19,7 @@ class Authenticate extends Middleware
             if (Str::contains($request->url(), 'admin')) {
                 return route('admin.login');
             } else {
-                return route('web.login');
+                return route('web.signin');
             }
         }
     }

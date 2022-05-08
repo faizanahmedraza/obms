@@ -30,7 +30,7 @@ class CheckBlockedUser
             if (Str::contains($request->url(), 'admin')) {
                 return redirect()->route('admin.login')->with(['message' => $message]);
             } else {
-                return redirect()->route('web.login')->with(['message' => $message]);
+                return redirect()->route('web.signin')->with(['message' => $message]);
             }
         }
 

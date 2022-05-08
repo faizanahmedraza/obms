@@ -27,10 +27,11 @@ class SignInController extends Controller
 
             if (Auth::user()->hasRole('Vendor')) {
                 return redirect()->intended('vendor/home');
-            } else if(Auth::user()->hasRole('Vendor')) {
+            } else if (Auth::user()->hasRole('Vendor')) {
                 return redirect()->intended('venue/home');
             } else {
-               return back()->withErrors(['errors' => 'Invalid Credentials!']);
+                Auth::logout();
+                return back()->withErrors(['errors' => 'Invalid Credentials!']);
             }
         }
 

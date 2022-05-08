@@ -13,13 +13,16 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    function __construct()
+    private $module;
+
+    public function __construct()
     {
-        $this->middleware('permission:admin.roles.index|admin.roles.create|admin.roles.edit|admin.roles.show|admin.roles.destroy', ['only' => ['index']]);
-        $this->middleware('permission:admin.roles.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:admin.roles.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:admin.roles.show', ['only' => ['show']]);
-        $this->middleware('permission:admin.roles.destroy', ['only' => ['destroy']]);
+        $this->module = 'roles';
+        $ULP = '|' . $this->module . '_all|access_all'; //UPPER LEVEL PERMISSIONS
+        $this->middleware('permission:' . $this->module . '_read' . $ULP, ['only' => ['index', 'show']]);
+        $this->middleware('permission:' . $this->module . '_create' . $ULP, ['only' => ['create','store']]);
+        $this->middleware('permission:' . $this->module . '_update' . $ULP, ['only' => ['edit','update']]);
+        $this->middleware('permission:' . $this->module . '_delete' . $ULP, ['only' => ['destroy']]);
     }
 
     public function index()

@@ -21,6 +21,6 @@ class SignOutController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('web.login');
+        return redirect()->route('web.signin');
     }
 }

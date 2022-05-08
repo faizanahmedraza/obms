@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" name="name" required="">
+                                <input type="password" name="password" required="">
                             </div>
                             <a class="d-flex justify-content-end text-secondary mb-3" href="{{route('web.password.request')}}">Forgot
                                     Password? </a>
