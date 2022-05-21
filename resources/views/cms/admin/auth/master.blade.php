@@ -10,8 +10,8 @@
     <meta name="keywords"
           content="admin template, obms admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{{ asset('assets/cms/images/favicon.png') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('assets/cms/images/favicon.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/web/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/web/images/favicon.ico') }}" type="image/x-icon">
     <title>@yield('title')</title>
     <!-- Google font-->
     <link rel="preconnect" href="https://fonts.gstatic.com/">

@@ -27,13 +27,37 @@
                         <h4>Reset Password</h4>
                         <form action="{{route('web.password.update')}}" method="POST"
                               class="default-form">
+                            @csrf
+                            @if (session()->has('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Whoops!</strong> {{session()->get('error')}}
+                                    <button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+                            @if ($errors->any())
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Whoops!</strong>
+                                    <ul class="text-left">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
                             <div class="form-group">
                                 <label>New Password</label>
-                                <input type="password" name="name" required="">
+                                <input type="password" name="password" required>
                             </div>
                             <div class="form-group">
                                 <label>Confirm Password</label>
-                                <input type="password" name="name" required="">
+                                <input type="password" name="password_confirmation" required>
                             </div>
                             <div class="form-group message-btn">
                                 <button type="submit" class="theme-btn btn-one">Submit</button>

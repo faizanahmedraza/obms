@@ -18,18 +18,11 @@ Route::get('/banquets', function () {
     return view('welcome');
 });
 
-Route::get('/s', 'HomeController@index')->name('home');
-Route::get('/venues', 'VenueController@index')->name('venues');
-Route::get('/events', 'EventController@index')->name('events');
-Route::get('/services', 'ServiceController@index')->name('vendors');
-Route::get('/our-partners', 'GalleryController@index')->name('gallery');
-Route::get('/contact-us', 'ContactUsController@index')->name('contact_us');
-
 //Website
 Route::group(['namespace' => 'Web', 'as' => 'web.'], function () {
     Route::get('/', 'HomeController')->name('home');
 
-    Route::group(['namespace' => 'Venues','prefix' => 'venues'], function () {
+    Route::group(['namespace' => 'Venues', 'prefix' => 'venues'], function () {
         Route::get('/banquets', 'BanquetController@index')->name('banquets');
         Route::get('/banquets/{id}', 'BanquetController@show')->name('banquets.details');
         Route::get('/lawns', 'LawnController@index')->name('lawns');
@@ -75,14 +68,16 @@ Route::group(['namespace' => 'Web', 'as' => 'web.'], function () {
                     ]
                 ]
             );
+            Route::get('/verification/{token}','CreatePasswordController@verifyToken')->name('verification');
+            Route::put('/verification/{token}','CreatePasswordController@createPassword')->name('verification.store');
+        });
 
-            //Protected Routes
-            Route::group(['middleware' => ['auth', 'check.blocked']], function () {
-                Route::post('/logout', 'SignOutController')->name('logout');
+        //Protected Routes
+        Route::group(['middleware' => ['auth', 'check.blocked']], function () {
+            Route::post('/logout', 'SignOutController')->name('logout');
 //                Route::get('/email/verify', 'EmailVerificationController@index')->name('verification.notice');
 //                Route::get('/email/verify/{id}/{hash}', 'EmailVerificationController@verifyEmail')->middleware('signed')->name('verification.verify');
 //                Route::post('/email/verification-notification', 'EmailVerificationController@resendEmailNotification')->middleware('throttle:6,1')->name('verification.send');
-            });
         });
     });
 });
@@ -140,25 +135,6 @@ Route::group(['namespace' => 'Cms'], function () {
                 Route::get('/email/verify', 'EmailVerificationController@index')->name('verification.notice');
                 Route::get('/email/verify/{id}/{hash}', 'EmailVerificationController@verifyEmail')->middleware('signed')->name('verification.verify');
                 Route::post('/email/verification-notification', 'EmailVerificationController@resendEmailNotification')->middleware('throttle:6,1')->name('verification.send');
-
-                Route::get('/admin-users', function () {
-                    $admins = \App\Models\User::with('roles')->whereHas('roles', function ($q) {
-                        $q->whereIn('name', ['Super Admin', 'Admin']);
-                    });
-                    return view('cms.admin.user-management.admins.index', compact('admins'));
-                });
-                Route::get('/customers', function () {
-                    $users = \App\Models\User::with('roles')->whereHas('roles', function ($q) {
-                        $q->where('name', 'Customer');
-                    });
-                    return view('cms.admin.user-management.users.index', compact('users'));
-                });
-                Route::get('/vendors', function () {
-                    $vendors = \App\Models\User::with('roles')->whereHas('roles', function ($q) {
-                        $q->where('name', 'Vendor');
-                    });
-                    return view('cms.admin.user-management.vendors.index', compact('vendors'));
-                });
             });
         });
 
@@ -169,9 +145,21 @@ Route::group(['namespace' => 'Cms'], function () {
             // Only verified users may access this routes section
             Route::group(['middleware' => 'verified'], function () {
                 Route::group(['namespace' => 'UserManagement'], function () {
-                    // User, Roles and  Permissions Management
+
+                    // User Management
+                    Route::get('/users', 'UserController@adminUsers')->name('users');
+                    Route::get('/vendor/users', 'UserController@vendorUsers')->name('vendor.users');
+                    Route::get('/venue/users', 'UserController@venueUsers')->name('venue.users');
+                    Route::get('/customers', 'UserController@customers')->name('customers');
+                    Route::get('/users/create', 'UserController@create')->name('users.create');
+                    Route::post('/users/create', 'UserController@store')->name('users.store');
+                    Route::get('/users/{id}/show', 'UserController@show')->name('users.show');
+                    Route::get('/users/{id}/edit', 'UserController@edit')->name('users.edit');
+                    Route::put('/users/{id}/update', 'UserController@update')->name('users.update');
+                    Route::post('/users/{id}/delete', 'UserController@destroy')->name('users.delete');
+
+                    // Roles and  Permissions Management
                     Route::resources([
-                        'users' => 'UserController',
                         'roles' => 'RoleController',
                     ]);
                 });

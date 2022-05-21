@@ -77,8 +77,8 @@
                                         <li><a href="">Photographers & Choreographers</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="{{route('gallery')}}"><span>Gallery</span></a></li>
-                                <li><a href="{{route('contact_us')}}"><span>Contact Us</span></a></li>
+                                <li><a href=""><span>Gallery</span></a></li>
+                                <li><a href=""><span>Contact Us</span></a></li>
                             </ul>
                         </div>
                     </nav>

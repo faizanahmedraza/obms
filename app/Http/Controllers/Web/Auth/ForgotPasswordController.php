@@ -36,7 +36,7 @@ class ForgotPasswordController extends Controller
                 'created_at' => Carbon::now()->toDateTimeString(),
             ]);
 
-            Mail::to($email)->queue((new SendForgotPasswordEmail($token))->afterCommit());
+            Mail::to($email)->send(new SendForgotPasswordEmail($token));
 
         } catch (\Exception $e) {
             return back()->withErrors(['errors' => $e->getMessage()]);
@@ -58,7 +58,7 @@ class ForgotPasswordController extends Controller
                     'created_at' => Carbon::now()->toDateTimeString(),
                 ]);
 
-                Mail::to($email)->queue((new SendForgotPasswordEmail($token))->afterCommit());
+                Mail::to($email)->send(new SendForgotPasswordEmail($token));
 
                 return back()->with('success', 'We have e-mailed you password reset link!');
 

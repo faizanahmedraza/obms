@@ -10,7 +10,10 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Customers</h5>
+                        <div class="d-flex justify-content-between">
+                            <h5>{{$pageTitle}}</h5>
+                            <a class="btn btn-primary" href="{{route('admin.users.create')}}">Create +</a>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

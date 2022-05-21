@@ -23,12 +23,13 @@
                                 <h6>User Management </h6>
                             </div>
                         </li>
-                        <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
+                        <li class="dropdown"><a class="nav-link menu-title {{ (request()->is('admin/users*') || request()->is('admin/customers*') || request()->is('admin/vendor/users*') || request()->is('admin/venue/users*')) ? 'active' : '' }}" href="javascript:void(0)"><i
                                         data-feather="users"></i><span>Users</span></a>
                             <ul class="nav-submenu menu-content">
-                                <li><a href="/admin/vendors">Vendors</a></li>
-                                <li><a href="/admin/customers">Customers</a></li>
-                                <li><a href="/admin/admin-users">Administrators</a></li>
+                                <li><a href="{{route('admin.users')}}" class="{{ request()->is('admin/users*') ? 'active' : '' }}">Administrators</a></li>
+                                <li><a href="{{route('admin.customers')}}" class="{{ request()->is('admin/customers*') ? 'active' : '' }}">Customers</a></li>
+                                <li><a href="{{route('admin.vendor.users')}}" class="{{ request()->is('admin/vendor/users*') ? 'active' : '' }}">Vendors</a></li>
+                                <li><a href="{{route('admin.venue.users')}}" class="{{ request()->is('admin/venue/users*') ? 'active' : '' }}">Venues</a></li>
                             </ul>
                         </li>
                         @can('roles_all')
