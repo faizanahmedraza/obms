@@ -35,6 +35,7 @@ class CreatePasswordController extends Controller
                 return back()->with('error', 'Invalid token!');
             }
             $user->password = $request->password;
+            $user->verification_token = null;
             $user->save();
 
             return redirect()->route('web.signin')->with('success', 'Your account has been successfully activated.');
