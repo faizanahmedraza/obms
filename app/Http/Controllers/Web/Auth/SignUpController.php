@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Verification;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -84,14 +86,16 @@ class SignUpController extends Controller
             $user->venue()->create(['venue_name' => $request->venue_name, 'venue_type' => $request->venue_type]);
         }
 
+        $tryError = 'Verification email has been sent to your email.';
+        try {
+            $emailData = new \stdClass();
+            $emailData->verification_link = config('app.url')."/verification/".$user->verification_token;
+            Mail::to($user->email)->send(new Verification($emailData));
+        } catch (\Exception $e) {
+            $tryError = ' but ' . $e->getMessage();
+        }
         DB::commit();
 
-        Auth::login($user);
-
-        if ($request->role == 'Vendor') {
-            return redirect()->intended('vendor/home');
-        } else {
-            return redirect()->intended('venue/home');
-        }
+        return redirect()->route('web.signup')->with('success', 'Successfully account created. ' . $tryError);
     }
 }
