@@ -20,20 +20,21 @@ class RoleController extends Controller
         $this->module = 'roles';
         $ULP = '|' . $this->module . '_all|access_all'; //UPPER LEVEL PERMISSIONS
         $this->middleware('permission:' . $this->module . '_read' . $ULP, ['only' => ['index', 'show']]);
-        $this->middleware('permission:' . $this->module . '_create' . $ULP, ['only' => ['create','store']]);
-        $this->middleware('permission:' . $this->module . '_update' . $ULP, ['only' => ['edit','update']]);
+        $this->middleware('permission:' . $this->module . '_create' . $ULP, ['only' => ['create', 'store']]);
+        $this->middleware('permission:' . $this->module . '_update' . $ULP, ['only' => ['edit', 'update']]);
         $this->middleware('permission:' . $this->module . '_delete' . $ULP, ['only' => ['destroy']]);
     }
 
     public function index()
     {
         $roles = Role::orderBy('name', 'asc')->get();
-        return view('admin.roles.index', compact('roles'));
+        return view('cms.admin.role-management.index', compact('roles'));
     }
 
     public function create()
     {
-        return view('admin.roles.create');
+        $permissionHeaders = PermissionHeader::with('permissions')->get();
+        return view('cms.admin.role-management.create', compact('permissionHeaders'));
     }
 
     public function store()
@@ -58,10 +59,11 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $role->id)
+        $permissionHeaders = PermissionHeader::with('permissions')->get();
+        $permissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $role->id)
             ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
             ->all();
-        return view('admin.roles.edit', compact('role', 'rolePermissions'));
+        return view('cms.admin.role-management.edit', compact('role', 'permissions', 'permissionHeaders'));
     }
 
     public function update(Role $role)
@@ -90,19 +92,29 @@ class RoleController extends Controller
 
     public function show(Role $role)
     {
-        $rolePermissions = Permission::join("role_has_permissions", "role_has_permissions.permission_id", "=", "permissions.id")
+        $permissionHeaders = PermissionHeader::with('permissions')->get();
+        $permissions = Permission::join("role_has_permissions", "role_has_permissions.permission_id", "=", "permissions.id")
             ->where("role_has_permissions.role_id", $role->id)
             ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
             ->all();
-        return view('admin.roles.show', compact('role', 'rolePermissions'));
+        return view('cms.admin.role-management.show', compact('role', 'permissions', 'permissionHeaders'));
     }
 
-    public function destroy(Role $role)
+    public function destroy($id)
     {
-        abort_if(in_array($role->name, User::PRIVATE_ROLES), 403, 'You are not allowed to delete this role.');
+        $msg = "Successfully Deleted.";
+        $code = 200;
+        $role = Role::where('id', $id)->first();
+        if (empty($role)) {
+            $msg = "Role not found!";
+        } elseif (in_array($role->name, User::PRIVATE_ROLES)) {
+            $msg = "You are not allowed to delete this role.";
+        } elseif ($role->users->isNotEmpty()) {
+            $msg = "You are not allowed to delete this role.";
+        }
 
         DB::table("role_has_permissions")->where('role_id', $role->id)->delete();
         DB::table("roles")->where('id', $role->id)->delete();
-        return back()->with(['message' => 'Role successfully deleted.']);
+        return response()->json(['msg' => $msg], $code);
     }
 }

@@ -86,36 +86,8 @@
 <!-- Bootstrap js-->
 <script src="{{ asset('assets/cms/js/bootstrap/popper.min.js') }}"></script>
 <script src="{{ asset('assets/cms/js/bootstrap/bootstrap.min.js') }}"></script>
-<!-- Plugins JS start-->
-<script src="{{ asset('assets/cms/js/chart/chartist/chartist.js') }}"></script>
-<script src="{{ asset('assets/cms/js/chart/chartist/chartist-plugin-tooltip.js') }}"></script>
-<script src="{{ asset('assets/cms/js/chart/knob/knob.min.js') }}"></script>
-<script src="{{ asset('assets/cms/js/chart/knob/knob-chart.js') }}"></script>
-<script src="{{ asset('assets/cms/js/chart/apex-chart/apex-chart.js') }}"></script>
-<script src="{{ asset('assets/cms/js/chart/apex-chart/stock-prices.js') }}"></script>
-<script src="{{ asset('assets/cms/js/prism/prism.min.js') }}"></script>
-<script src="{{ asset('assets/cms/js/clipboard/clipboard.min.js') }}"></script>
-<script src="{{ asset('assets/cms/js/counter/jquery.waypoints.min.js') }}"></script>
-<script src="{{ asset('assets/cms/js/counter/jquery.counterup.min.js') }}"></script>
-<script src="{{ asset('assets/cms/js/counter/counter-custom.js') }}"></script>
-<script src="{{ asset('assets/cms/js/custom-card/custom-card.js') }}"></script>
-<script src="{{ asset('assets/cms/js/vector-map/jquery-jvectormap-2.0.2.min.js') }}"></script>
-<script src="{{ asset('assets/cms/js/vector-map/map/jquery-jvectormap-world-mill-en.js') }}"></script>
-<script src="{{ asset('assets/cms/js/vector-map/map/jquery-jvectormap-us-aea-en.js') }}"></script>
-<script src="{{ asset('assets/cms/js/vector-map/map/jquery-jvectormap-uk-mill-en.js') }}"></script>
-<script src="{{ asset('assets/cms/js/vector-map/map/jquery-jvectormap-au-mill.js') }}"></script>
-<script src="{{ asset('assets/cms/js/vector-map/map/jquery-jvectormap-chicago-mill-en.js') }}"></script>
-<script src="{{ asset('assets/cms/js/vector-map/map/jquery-jvectormap-in-mill.js') }}"></script>
-<script src="{{ asset('assets/cms/js/vector-map/map/jquery-jvectormap-asia-mill.js') }}"></script>
-<script src="{{ asset('assets/cms/js/dashboard/default.js') }}"></script>
-<script src="{{ asset('assets/cms/js/datepicker/date-picker/datepicker.js') }}"></script>
-<script src="{{ asset('assets/cms/js/datepicker/date-picker/datepicker.en.js') }}"></script>
-<script src="{{ asset('assets/cms/js/datepicker/date-picker/datepicker.custom.js') }}"></script>
-<!-- Plugins JS Ends-->
 <!-- Theme js-->
 <script src="{{ asset('assets/cms/js/script.js') }}"></script>
-<!-- Theme Customizer -->
-{{--<script src="{{ asset('assets/cms/js/theme-customizer/customizer.js') }}"></script>--}}
 <!-- Custom Scripts-->
 @stack('scripts')
 </body>

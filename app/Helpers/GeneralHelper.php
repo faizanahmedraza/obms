@@ -26,3 +26,21 @@ if (!function_exists('urlAccessUserType')) {
         return false;
     }
 }
+
+if(!function_exists('getPermissionHeader'))
+{
+    function getPermissionHeader($permission)
+    {
+        $permissionHeaders = array_flip(config('obms.permission_headers'));
+        $header = $permission;
+        foreach ($permissionHeaders as $key => $val)
+        {
+            if($key == $permission)
+            {
+                $header = $val;
+                break;
+            }
+        }
+        return $header;
+    }
+}

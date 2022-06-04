@@ -33,10 +33,10 @@
                             </ul>
                         </li>
                         @can('roles_all')
-                            <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
+                            <li class="dropdown"><a class="nav-link menu-title {{ request()->is('admin/roles*') ? 'active' : '' }}" href="javascript:void(0)"><i
                                             data-feather="lock"></i><span>User Roles</span></a>
                                 <ul class="nav-submenu menu-content">
-                                    <li><a href="">Roles & Permissions</a></li>
+                                    <li><a href="{{route('admin.roles.index')}}" {{ request()->is('admin/roles*') ? 'active' : '' }}>Roles & Permissions</a></li>
                                 </ul>
                             </li>
                         @endcan

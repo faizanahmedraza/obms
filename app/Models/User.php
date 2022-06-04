@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, CascadeSoftDeletes;
+
+    protected $cascadeDeletes = ['venue','vendor','customer'];
 
     const PRIVATE_ROLES = ['Super Admin','Admin','Vendor','Venue','Customer'];
 
@@ -56,11 +58,7 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($value)
     {
-        if(Str::contains($value,['facebook','google']))
-        {
-            return $value;
-        }
-        return asset($value ? 'storage/'.$value : '/assets/images/default-avatar.png');
+        return !empty($value) ?: asset('/assets/images/default-avatar.png');
     }
 
     public function venue()
@@ -71,5 +69,10 @@ class User extends Authenticatable
     public function vendor()
     {
         return $this->hasOne(Vendor::class,'user_id','id');
+    }
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class,'user_id','id');
     }
 }

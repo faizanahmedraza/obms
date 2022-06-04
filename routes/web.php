@@ -68,8 +68,8 @@ Route::group(['namespace' => 'Web', 'as' => 'web.'], function () {
                     ]
                 ]
             );
-            Route::get('/verification/{token}','CreatePasswordController@verifyToken')->name('verification');
-            Route::put('/verification/{token}','CreatePasswordController@createPassword')->name('verification.store');
+            Route::get('/verification/{token}', 'CreatePasswordController@verifyToken')->name('verification');
+            Route::put('/verification/{token}', 'CreatePasswordController@createPassword')->name('verification.store');
         });
 
         //Protected Routes
@@ -156,11 +156,14 @@ Route::group(['namespace' => 'Cms'], function () {
                     Route::get('/users/{id}/show', 'UserController@show')->name('users.show');
                     Route::get('/users/{id}/edit', 'UserController@edit')->name('users.edit');
                     Route::put('/users/{id}/update', 'UserController@update')->name('users.update');
-                    Route::post('/users/{id}/delete', 'UserController@destroy')->name('users.delete');
+                    Route::delete('/users/{id}/delete', 'UserController@destroy')->name('users.delete');
 
                     // Roles and  Permissions Management
+                    Route::delete('/roles/{id}/delete','RoleController@destroy')->name('roles.delete');;
                     Route::resources([
                         'roles' => 'RoleController',
+                    ], [
+                        'except' => ['destroy']
                     ]);
                 });
             });

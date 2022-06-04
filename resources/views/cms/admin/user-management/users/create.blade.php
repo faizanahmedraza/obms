@@ -33,6 +33,13 @@
                                 <form method="POST" action="{{route('admin.users.store')}}"
                                       enctype="multipart/form-data">
                                     @csrf
+                                    @if (session()->has('error'))
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <strong>Whoops!</strong> {{session()->get('error')}}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                    @endif
                                     @if ($errors->any())
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                             <strong>Whoops!</strong>
@@ -92,6 +99,49 @@
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <div class="col-md-6 service_type_div">
+                                                <div class="form-group">
+                                                    <label for="service_name">Service Name</label>
+                                                    <input type="text" class="form-control" id="service_name"
+                                                           name="service_name"
+                                                           placeholder="Enter Service" value="{{old('service_name')}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 service_type_div">
+                                                <div class="form-group">
+                                                    <label for="service_type">Service Type</label>
+                                                    <select class="form-control" name="service_type" id="service_type">
+                                                        <option value="">Select</option>
+                                                        @foreach($vendors as $vendor)
+                                                            <option value="{{old('service_type',$vendor)}}">{{ucwords(str_replace(['_and_','_'],['/',' '],$vendor))}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 venue_type_div">
+                                                <div class="form-group">
+                                                    <label for="venue_name">Venue Name</label>
+                                                    <input type="text" class="form-control" id="venue_name"
+                                                           name="venue_name"
+                                                           placeholder="Enter Venue" value="{{old('venue_name')}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 venue_type_div">
+                                                <div class="form-group">
+                                                    <label for="venue_type">Venue Type</label>
+                                                    <select class="form-control" name="venue_type" id="venue_type">
+                                                        <option value="">Select</option>
+                                                        @foreach($venues as $venue)
+                                                            <option value="{{old('venue_type',$venue)}}">{{ucwords(str_replace('_',' ',$venue))}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                             <div class="col-md-6">
                                                 <div class="form-check">
                                                     <label>Gender</label><br>
@@ -130,3 +180,46 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        var role = '{{old('role')}}';
+        if (role) {
+            switch (role) {
+                case "4":
+                    $(".service_type_div").show();
+                    $(".venue_type_div").hide();
+                    break;
+                case "6":
+                    $(".venue_type_div").show();
+                    $(".service_type_div").hide();
+                    break;
+                default:
+                    $(".service_type_div").hide();
+                    $(".venue_type_div").hide();
+                    break;
+            }
+        } else {
+            $(".service_type_div").hide();
+            $(".venue_type_div").hide();
+        }
+
+        $("#role").change(function () {
+            switch ($(this).find(':selected').val()) {
+                case "4":
+                    $(".service_type_div").show();
+                    $(".venue_type_div").hide();
+                    break;
+                case "6":
+                    $(".venue_type_div").show();
+                    $(".service_type_div").hide();
+                    break;
+                default:
+                    $(".service_type_div").hide();
+                    $(".venue_type_div").hide();
+                    break;
+            }
+        });
+
+    </script>
+@endpush
