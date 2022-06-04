@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
 
         foreach ($users as $user) {
             $user->assignRole('Customer');
+            $user->customer()->create([]);
         }
     }
 }

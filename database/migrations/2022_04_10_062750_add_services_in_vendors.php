@@ -27,7 +27,7 @@ class AddServicesInVendors extends Migration
     public function down()
     {
         Schema::table('vendors', function (Blueprint $table) {
-            //
+            $table->dropColumn(['service_type','service_name']);
         });
     }
 }

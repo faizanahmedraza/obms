@@ -41,6 +41,8 @@ Route::group(['namespace' => 'Web', 'as' => 'web.'], function () {
             Route::get('/signin', 'SignInController@index')->name('signin');
             Route::post('/signin', 'SignInController@store')->name('signin.store');
             Route::get('/signup', 'SignUpController@index')->name('signup');
+            Route::get('/cus/signup', 'SignUpController@customerSignup')->name('customer.signup');
+            Route::post('/cus/signup', 'SignUpController@customerSignupStore')->name('customer.signup.store');
             Route::post('/vendor/signup', 'SignUpController@store')->name('vendor.signup.store');
             Route::post('/venue/signup', 'SignUpController@store')->name('venue.signup.store');
             Route::resource('forgot-password', 'ForgotPasswordController',

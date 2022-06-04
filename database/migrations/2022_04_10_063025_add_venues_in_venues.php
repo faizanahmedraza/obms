@@ -27,7 +27,7 @@ class AddVenuesInVenues extends Migration
     public function down()
     {
         Schema::table('venues', function (Blueprint $table) {
-            //
+            $table->dropColumn(['venue_type','venue_name']);
         });
     }
 }

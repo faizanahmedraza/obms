@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Mail\Verification;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Models\VendorService;
 use App\Models\Venue;
+use App\Models\VenueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -50,7 +52,7 @@ class SignUpController extends Controller
                 $rules['contact_number_vendor'] = ['nullable', 'numeric', 'regex:/[0-9]{10,11}/'];
                 $userData['email'] = trim(strtolower($request->email_vendor));
                 $userData['contact_number'] = $request->contact_number_vendor;
-                $userData['name'] = strtok($userData['email'],'@');
+                $userData['name'] = strtok($userData['email'], '@');
             } elseif ($request->role == 'Venue') {
                 $rules['email_venue'] = ['required', 'email', 'max:100'];
                 $rules['venue_name'] = ['required', 'string', 'max:150'];
@@ -58,7 +60,7 @@ class SignUpController extends Controller
                 $rules['contact_number_venue'] = ['nullable', 'numeric', 'regex:/[0-9]{10,11}/'];
                 $userData['email'] = trim(strtolower($request->email_venue));
                 $userData['contact_number'] = $request->contact_number_venue;
-                $userData['name'] = strtok($userData['email'],'@');
+                $userData['name'] = strtok($userData['email'], '@');
             }
             $customMessages = [
                 'email_vendor' => 'email',
@@ -80,16 +82,18 @@ class SignUpController extends Controller
 
         if ($request->role == "Vendor") {
             $user->assignRole('Vendor');
-            $user->vendor()->create(['service_name' => $request->service_name, 'service_type' => $request->service_type]);
+            $vendor = $user->vendor()->create([]);
+            VendorService::create(['vendor_id' => $vendor->user_id, 'service_name' => $request->service_name, 'service_type' => $request->service_type, 'slug' => Str::slug($request->service_name)]);
         } else {
             $user->assignRole('Venue');
-            $user->venue()->create(['venue_name' => $request->venue_name, 'venue_type' => $request->venue_type]);
+            $venue = $user->venue()->create([]);
+            VenueService::create(['venue_id' => $venue->user_id, 'venue_name' => $request->venue_name, 'venue_type' => $request->venue_type, 'slug' => Str::slug($request->venue_name)]);
         }
 
         $tryError = 'Verification email has been sent to your email.';
         try {
             $emailData = new \stdClass();
-            $emailData->verification_link = config('app.url')."/verification/".$user->verification_token;
+            $emailData->verification_link = config('app.url') . "/verification/" . $user->verification_token;
             Mail::to($user->email)->send(new Verification($emailData));
         } catch (\Exception $e) {
             $tryError = ' but ' . $e->getMessage();
@@ -97,5 +101,37 @@ class SignUpController extends Controller
         DB::commit();
 
         return redirect()->route('web.signup')->with('success', 'Successfully account created. ' . $tryError);
+    }
+
+    public function customerSignup()
+    {
+        return view('web.auth.customer-signup');
+    }
+
+    public function customerSignupStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:150',
+            'email' => 'required|email|max:150',
+        ]);
+
+        DB::beginTransaction();
+        $userData = array();
+        $userData['name'] = trim(strtolower($request->name));
+        $userData['email'] = trim(strtolower($request->email));
+        $user = User::create($userData);
+        $user->assignRole('Customer');
+        $user->customer()->create([]);
+
+        $tryError = 'Verification email has been sent to your email.';
+        try {
+            $emailData = new \stdClass();
+            $emailData->verification_link = config('app.url') . "/verification/" . $user->verification_token;
+            Mail::to($user->email)->send(new Verification($emailData));
+        } catch (\Exception $e) {
+            $tryError = ' but ' . $e->getMessage();
+        }
+        DB::commit();
+        return redirect()->route('web.customer.signup')->with('success', 'Successfully account created. ' . $tryError);
     }
 }

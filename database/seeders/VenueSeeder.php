@@ -20,6 +20,7 @@ class VenueSeeder extends Seeder
 
         foreach ($users as $user) {
             $user->assignRole('Venue');
+            $user->venue()->create([]);
         }
     }
 }

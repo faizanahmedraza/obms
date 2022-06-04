@@ -8,7 +8,9 @@ use App\Jobs\SendUserAccountVerificationEmailJob;
 use App\Mail\Verification;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Models\VendorService;
 use App\Models\Venue;
+use App\Models\VenueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -137,7 +139,8 @@ class UserController extends Controller
 
         if ($request->role == 4) {
             $user->assignRole('Vendor');
-            $user->vendor()->create(['service_name' => $request->service_name, 'service_type' => $request->service_type]);
+            $vendor = $user->vendor()->create([]);
+            VendorService::create(['vendor_id' => $vendor->user_id, 'service_name' => $request->service_name, 'service_type' => $request->service_type, 'slug' => Str::slug($request->service_name)]);
             $route = 'vendor.users';
         } else if ($request->role == 3) {
             $user->assignRole('Customer');
@@ -145,7 +148,8 @@ class UserController extends Controller
             $route = 'customers';
         } else if ($request->role == 6) {
             $user->assignRole('Venue');
-            $user->venue()->create(['venue_name' => $request->venue_name, 'venue_type' => $request->venue_type]);
+            $venue = $user->venue()->create([]);
+            VenueService::create(['venue_id' => $venue->user_id, 'venue_name' => $request->venue_name, 'venue_type' => $request->venue_type, 'slug' => Str::slug($request->venue_name)]);
             $route = 'venue.users';
         } else {
             $user->assignRole($request->role);
@@ -262,7 +266,8 @@ class UserController extends Controller
         $route = 'admin.users';
         if ($request->role == 4) {
             $user->scopeRole('Vendor');
-            $user->vendor()->create(['service_name' => $request->service_name, 'service_type' => $request->service_type]);
+            $vendor = $user->vendor()->create([]);
+            VendorService::create(['vendor_id' => $vendor->user_id, 'service_name' => $request->service_name, 'service_type' => $request->service_type, 'slug' => Str::slug($request->service_name)]);
             $route = 'vendor.users';
         } else if ($request->role == 3) {
             $user->scopeRole('Customer');
@@ -270,7 +275,8 @@ class UserController extends Controller
             $route = 'customers';
         } else if ($request->role == 6) {
             $user->scopeRole('Venue');
-            $user->venue()->create(['venue_name' => $request->venue_name, 'venue_type' => $request->venue_type]);
+            $venue = $user->venue()->create([]);
+            VenueService::create(['venue_id' => $venue->user_id, 'venue_name' => $request->venue_name, 'venue_type' => $request->venue_type, 'slug' => Str::slug($request->venue_name)]);
             $route = 'venue.users';
         }
 

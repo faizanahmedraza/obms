@@ -20,6 +20,7 @@ class VendorSeeder extends Seeder
 
         foreach ($users as $user) {
             $user->assignRole('Vendor');
+            $user->vendor()->create([]);
         }
     }
 }
