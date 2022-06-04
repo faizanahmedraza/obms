@@ -21,14 +21,14 @@
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     <strong>Success!</strong> {{session()->get('success')}}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                    aria-label="Close"></button>
+                                            aria-label="Close"></button>
                                 </div>
                             @endif
                             @if (session()->has('error'))
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                     <strong>Whoops!</strong> {{session()->get('error')}}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                    aria-label="Close"></button>
+                                            aria-label="Close"></button>
                                 </div>
                             @endif
                             <table class="display" id="users">
@@ -45,18 +45,20 @@
                                 @forelse($users as $user)
                                     <tr>
                                         <td>{{ucwords($user->name)}}</td>
-                                        <td>{{ucwords($user->roles->first()->name ?? '')}}</td>
+                                        <td>{{$user->roles->first()->name ?? ''}}</td>
                                         <td>{{ucwords($user->email)}}</td>
                                         <td>{{ucwords($user->created_at->diffForHumans())}}</td>
                                         <td>
-                                            <a href="{{route('admin.users.edit',['id' => $user->id])}}"
-                                               style="cursor: pointer;"><i class="fa fa-pencil-square-o"
-                                                                           aria-hidden="true"></i></a>
                                             <a href="{{route('admin.users.show',['id' => $user->id])}}"
                                                style="cursor: pointer;"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            <a href="javascript:void(0);"
-                                               style="cursor: pointer;" onclick="onDeleteUser({{$user->id}})"><i
-                                                        class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                            @if($user->roles->first()->name != 'Super Admin' && auth()->id() != $user->id)
+                                                <a href="{{route('admin.users.edit',['id' => $user->id])}}"
+                                                   style="cursor: pointer;"><i class="fa fa-pencil-square-o"
+                                                                               aria-hidden="true"></i></a>
+                                                <a href="javascript:void(0);"
+                                                   style="cursor: pointer;" onclick="onDeleteUser({{$user->id}})"><i
+                                                            class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty

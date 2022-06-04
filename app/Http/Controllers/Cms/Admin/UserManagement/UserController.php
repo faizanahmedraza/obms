@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function adminUsers()
     {
-        $users = User::where('id', '!=', Auth::id())->with('roles')->whereHas('roles', function ($q) {
+        $users = User::with('roles')->whereHas('roles', function ($q) {
             $q->whereIn('name', ['Super Admin', 'Admin']);
         })->latest()->get();
         $pageTitle = "Administrator Users";
