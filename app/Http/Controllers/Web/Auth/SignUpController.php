@@ -78,6 +78,7 @@ class SignUpController extends Controller
 
         DB::beginTransaction();
 
+        $userData['password'] = Str::random(30);
         $user = User::create($userData);
 
         if ($request->role == "Vendor") {
@@ -119,6 +120,7 @@ class SignUpController extends Controller
         $userData = array();
         $userData['name'] = trim(strtolower($request->name));
         $userData['email'] = trim(strtolower($request->email));
+        $userData['password'] = Str::random(30);
         $user = User::create($userData);
         $user->assignRole('Customer');
         $user->customer()->create([]);

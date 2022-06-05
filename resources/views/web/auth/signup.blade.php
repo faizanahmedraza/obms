@@ -32,11 +32,14 @@
             <div class="row clearfix">
                 <div class="col-xl-8 col-lg-12 col-md-12 offset-xl-2 big-column">
                     <div class="tabs-box">
-                        <div class="tab-btn-box">
+                        <div class="tab-btn-box mb-3">
                             <ul class="tab-btns tab-buttons centred clearfix">
                                 <li class="tab-btn {{ ((session()->has('active_key') && session()->get('active_key') === "web.vendor.signup.store") || !session()->has('active_key')) ? 'active-btn' : ''  }}" data-tab="#tab-1">Vendor</li>
                                 <li class="tab-btn {{ (session()->has('active_key') && session()->get('active_key') === "web.venue.signup.store") ? 'active-btn' : '' }}" data-tab="#tab-2">Venue</li>
                             </ul>
+                        </div>
+                        <div class="mb-3">
+                            <p>Are you buyer or customer? <a href="{{route('web.customer.signup')}}" style="color: #2dbe6c;">Register Here</a></p>
                         </div>
                         <div class="tabs-content">
                             <div class="tab {{ ((session()->has('active_key') && session()->get('active_key') === "web.vendor.signup.store") || !session()->has('active_key')) ? 'active-tab' : '' }}" id="tab-1">

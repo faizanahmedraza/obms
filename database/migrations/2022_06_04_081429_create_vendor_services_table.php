@@ -25,6 +25,7 @@ class CreateVendorServicesTable extends Migration
             $table->string('service_type');
             $table->string('service_name');
             $table->string('slug');
+            $table->string('image')->nullable();
             $table->string('country')->nullable();
             $table->string('city')->nullable();
             $table->string('address')->nullable();

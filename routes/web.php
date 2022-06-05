@@ -161,13 +161,18 @@ Route::group(['namespace' => 'Cms'], function () {
                     Route::delete('/users/{id}/delete', 'UserController@destroy')->name('users.delete');
 
                     // Roles and  Permissions Management
-                    Route::delete('/roles/{id}/delete','RoleController@destroy')->name('roles.delete');;
+                    Route::delete('/roles/{id}/delete','RoleController@destroy')->name('roles.delete');
                     Route::resources([
                         'roles' => 'RoleController',
                     ], [
                         'except' => ['destroy']
                     ]);
                 });
+
+                Route::delete('/vendors/{id}/delete','VendorController@destroy')->name('vendors.delete');
+                Route::resource('vendors','VendorController')->parameters(['vendors'=>'id'])->except('destroy');
+                Route::delete('/venues/{id}/delete','VenueController@destroy')->name('venues.delete');
+                Route::resource('venues','VenueController')->parameters(['venues'=>'id'])->except('destroy');
             });
         });
     });
@@ -180,7 +185,8 @@ Route::group(['namespace' => 'Cms'], function () {
 
             // Only verified users may access this routes section
             Route::group(['middleware' => 'verified'], function () {
-
+                Route::delete('/vendors/{id}/delete','VendorController@destroy')->name('vendors.delete');
+                Route::resource('vendors','VendorController')->parameters(['vendors'=>'id'])->except('destroy');
             });
         });
     });
@@ -193,7 +199,8 @@ Route::group(['namespace' => 'Cms'], function () {
 
             // Only verified users may access this routes section
             Route::group(['middleware' => 'verified'], function () {
-
+                Route::delete('/venues/{id}/delete','VenueController@destroy')->name('venues.delete');
+                Route::resource('venues','VenueController')->parameters(['venues'=>'id'])->except('destroy');
             });
         });
     });

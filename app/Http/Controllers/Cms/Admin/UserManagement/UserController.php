@@ -122,9 +122,6 @@ class UserController extends Controller
         DB::beginTransaction();
 
         if (!empty($request->file('avatar'))) {
-//            $file = request()->file('avatar');
-//            $ext = $file->getclientoriginalextension();
-//            $userData['avatar'] = $file->storeAs('avatars', 'avatar-' . now()->timestamp . '.' . $ext);
             $userData['avatar'] = CloudinaryService::upload($request->file('avatar')->getRealPath())->secureUrl;;
         }
 

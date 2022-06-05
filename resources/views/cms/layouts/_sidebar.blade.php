@@ -23,24 +23,89 @@
                                 <h6>User Management </h6>
                             </div>
                         </li>
-                        <li class="dropdown"><a class="nav-link menu-title {{ (request()->is('admin/users*') || request()->is('admin/customers*') || request()->is('admin/vendor/users*') || request()->is('admin/venue/users*')) ? 'active' : '' }}" href="javascript:void(0)"><i
+                        <li class="dropdown"><a
+                                    class="nav-link menu-title {{ (request()->is('admin/users*') || request()->is('admin/customers*') || request()->is('admin/vendor/users*') || request()->is('admin/venue/users*')) ? 'active' : '' }}"
+                                    href="javascript:void(0)"><i
                                         data-feather="users"></i><span>Users</span></a>
                             <ul class="nav-submenu menu-content">
-                                <li><a href="{{route('admin.users')}}" class="{{ request()->is('admin/users*') ? 'active' : '' }}">Administrators</a></li>
-                                <li><a href="{{route('admin.customers')}}" class="{{ request()->is('admin/customers*') ? 'active' : '' }}">Customers</a></li>
-                                <li><a href="{{route('admin.vendor.users')}}" class="{{ request()->is('admin/vendor/users*') ? 'active' : '' }}">Vendors</a></li>
-                                <li><a href="{{route('admin.venue.users')}}" class="{{ request()->is('admin/venue/users*') ? 'active' : '' }}">Venues</a></li>
+                                <li><a href="{{route('admin.users')}}"
+                                       class="{{ request()->is('admin/users*') ? 'active' : '' }}">Administrators</a>
+                                </li>
+                                <li><a href="{{route('admin.customers')}}"
+                                       class="{{ request()->is('admin/customers*') ? 'active' : '' }}">Customers</a>
+                                </li>
+                                <li><a href="{{route('admin.vendor.users')}}"
+                                       class="{{ request()->is('admin/vendor/users*') ? 'active' : '' }}">Vendors</a>
+                                </li>
+                                <li><a href="{{route('admin.venue.users')}}"
+                                       class="{{ request()->is('admin/venue/users*') ? 'active' : '' }}">Venues</a></li>
                             </ul>
                         </li>
                         @can('roles_all')
-                            <li class="dropdown"><a class="nav-link menu-title {{ request()->is('admin/roles*') ? 'active' : '' }}" href="javascript:void(0)"><i
-                                            data-feather="lock"></i><span>User Roles</span></a>
+                            <li class="dropdown"><a
+                                        class="nav-link menu-title {{ request()->is('admin/roles*') ? 'active' : '' }}"
+                                        href="javascript:void(0)"><i
+                                            data-feather="lock"></i><span>Roles
+                                            & Permissions</span></a>
                                 <ul class="nav-submenu menu-content">
-                                    <li><a href="{{route('admin.roles.index')}}" {{ request()->is('admin/roles*') ? 'active' : '' }}>Roles & Permissions</a></li>
+                                    <li>
+                                        <a href="{{route('admin.roles.index')}}" {{ request()->is('admin/roles*') ? 'active' : '' }}>Roles
+                                            & Permissions</a></li>
                                 </ul>
                             </li>
                         @endcan
                     @endcan
+                    @if(in_array(auth()->user()->roles->first()->name,['Vendor','Venue']))
+                        @can('vendor_services_all')
+                            <li class="dropdown"><a
+                                        class="nav-link menu-title {{ request()->is('admin/vendors*') ? 'active' : '' }}"
+                                        href="javascript:void(0)"><i
+                                            data-feather="archive"></i><span>Vendor Services</span></a>
+                                <ul class="nav-submenu menu-content">
+                                    <li>
+                                        <a href="{{route('admin.vendors.index')}}" {{ request()->is('admin/vendors*') ? 'active' : '' }}>Vendor
+                                            Services</a></li>
+                                </ul>
+                            </li>
+                        @endcan
+                        @can('venue_services_all')
+                            <li class="dropdown"><a
+                                        class="nav-link menu-title {{ request()->is('admin/venues*') ? 'active' : '' }}"
+                                        href="javascript:void(0)"><i
+                                            data-feather="layers"></i><span>Venue Services</span></a>
+                                <ul class="nav-submenu menu-content">
+                                    <li>
+                                        <a href="{{route('admin.venues.index')}}" {{ request()->is('admin/venues*') ? 'active' : '' }}>Venue
+                                            Services</a></li>
+                                </ul>
+                            </li>
+                        @endcan
+                    @else
+                        @can('vendor_services_all')
+                            <li class="dropdown"><a
+                                        class="nav-link menu-title {{ request()->is('admin/vendors*') ? 'active' : '' }}"
+                                        href="javascript:void(0)"><i
+                                            data-feather="archive"></i><span>Vendor Services</span></a>
+                                <ul class="nav-submenu menu-content">
+                                    <li>
+                                        <a href="{{route('admin.vendors.index')}}" {{ request()->is('admin/vendors*') ? 'active' : '' }}>Vendor
+                                            Services</a></li>
+                                </ul>
+                            </li>
+                        @endcan
+                        @can('venue_services_all')
+                            <li class="dropdown"><a
+                                        class="nav-link menu-title {{ request()->is('admin/roles*') ? 'active' : '' }}"
+                                        href="javascript:void(0)"><i
+                                            data-feather="layers"></i><span>Venue Services</span></a>
+                                <ul class="nav-submenu menu-content">
+                                    <li>
+                                        <a href="{{route('admin.venues.index')}}" {{ request()->is('admin/roles*') ? 'active' : '' }}>Venue
+                                            Services</a></li>
+                                </ul>
+                            </li>
+                        @endcan
+                    @endif
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

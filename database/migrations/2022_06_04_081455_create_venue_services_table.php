@@ -25,6 +25,8 @@ class CreateVenueServicesTable extends Migration
             $table->string('venue_type');
             $table->string('venue_name');
             $table->string('slug');
+            $table->string('image')->nullable();
+            $table->string('virtual_tour')->nullable();
             $table->string('country')->nullable();
             $table->string('city')->nullable();
             $table->string('address')->nullable();
