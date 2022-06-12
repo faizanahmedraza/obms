@@ -27,7 +27,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="{{route('admin.venues.edit',['id' => $venue->id])}}"
+                                <form method="POST" action="{{route('admin.venues.update',['id' => $venue->id])}}"
                                       enctype="multipart/form-data">
                                     @method('PUT')
                                     @csrf
@@ -51,6 +51,18 @@
                                         </div>
                                     @endif
                                     <div class="card-body">
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label for="vendor">Venue Owners</label>
+                                                <select class="form-control" name="venue_owner" id="venue_owner">
+                                                    <option value="">Select</option>
+                                                    @foreach($venueUsers as $val)
+                                                        <option value="{{$val->id}}" {{(int)old('venue_owner',$venue->venue_id) == $val->id ? 'selected' : ""}}>{{ucwords($val->name)}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">

@@ -25,7 +25,7 @@ class VendorController extends Controller
 
     public function __construct()
     {
-        $this->module = 'vendor_services';
+        $this->module = 'services';
         $ULP = '|' . $this->module . '_all|access_all'; //UPPER LEVEL PERMISSIONS
         $this->middleware('permission:' . $this->module . '_read' . $ULP, ['only' => ['index', 'show']]);
         $this->middleware('permission:' . $this->module . '_create' . $ULP, ['only' => ['create', 'store']]);
@@ -133,7 +133,7 @@ class VendorController extends Controller
             $data['image'] = CloudinaryService::upload($request->file('image')->getRealPath())->secureUrl;;
         }
 
-        $data['vendor_id'] = $request->vendor;
+        $data['vendor_id'] = \auth()->id();
         $data['service_name'] = request()->service_name;
         $data['slug'] = Str::slug(request()->service_name);
         $data['service_type'] = request()->service_type;

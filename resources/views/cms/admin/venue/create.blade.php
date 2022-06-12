@@ -50,6 +50,18 @@
                                         </div>
                                     @endif
                                     <div class="card-body">
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label for="vendor">Venue Owners</label>
+                                                <select class="form-control" name="venue_owner" id="venue_owner">
+                                                    <option value="">Select</option>
+                                                    @foreach($venueUsers as $val)
+                                                        <option value="{{$val->id}}" {{old('venue_owner') == $val->id ? 'selected' : ""}}>{{ucwords($val->name)}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">

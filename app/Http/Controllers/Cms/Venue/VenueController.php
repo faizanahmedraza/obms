@@ -25,7 +25,7 @@ class VenueController extends Controller
 
     public function __construct()
     {
-        $this->module = 'venue_services';
+        $this->module = 'venues';
         $ULP = '|' . $this->module . '_all|access_all'; //UPPER LEVEL PERMISSIONS
         $this->middleware('permission:' . $this->module . '_read' . $ULP, ['only' => ['index', 'show']]);
         $this->middleware('permission:' . $this->module . '_create' . $ULP, ['only' => ['create', 'store']]);
@@ -49,7 +49,6 @@ class VenueController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'venue_owner' => 'required|in:'.implode(',',User::has('venue')->pluck('id')->toArray()),
             'venue_name' => 'required|string|max:150',
             'venue_type' => 'required|in:' . implode(',', Venue::VENUE_TYPES),
             'country' => 'required|string|max:100',
@@ -78,10 +77,10 @@ class VenueController extends Controller
             $userData['image'] = CloudinaryService::upload($request->file('image')->getRealPath())->secureUrl;;
         }
 
-        $data['venue_id'] = $request->venue_owner;
-        $data['service_name'] = request()->service_name;
-        $data['slug'] = Str::slug(request()->service_name);
-        $data['service_type'] = request()->service_type;
+        $data['venue_id'] = \auth()->id();
+        $data['venue_name'] = request()->venue_name;
+        $data['slug'] = Str::slug(request()->venue_name);
+        $data['venue_type'] = request()->venue_type;
         $data['country'] = request()->country;
         $data['city'] = request()->city;
         $data['address'] = request()->address;
@@ -112,7 +111,6 @@ class VenueController extends Controller
     {
         $venue = VenueService::where('venue_id',auth()->id())->where('id',$id)->firstOrFail();
         $rules = [
-            'venue_owner' => 'required|in:'.implode(',',User::has('venue')->pluck('id')->toArray()),
             'venue_name' => 'required|string|max:150',
             'venue_type' => 'required|in:' . implode(',', Venue::VENUE_TYPES),
             'country' => 'required|string|max:100',
@@ -139,9 +137,10 @@ class VenueController extends Controller
             $data['image'] = CloudinaryService::upload($request->file('image')->getRealPath())->secureUrl;;
         }
 
-        $data['venue_id'] = $request->venue_owner;
-        $data['service_name'] = request()->service_name;
-        $data['service_type'] = request()->service_type;
+        $data['venue_id'] = \auth()->id();
+        $data['venue_name'] = request()->venue_name;
+        $data['slug'] = Str::slug(request()->venue_name);
+        $data['venue_type'] = request()->venue_type;
         $data['country'] = request()->country;
         $data['city'] = request()->city;
         $data['address'] = request()->address;

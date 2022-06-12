@@ -38,19 +38,15 @@
                                         </div>
                                     @endif
                                     @if ($errors->any())
-                                        <div class="container pt-2">
-                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                <strong>Whoops!</strong>
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
-                                                <button type="button" class="close" data-dismiss="alert"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <strong>Whoops!</strong>
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
                                         </div>
                                     @endif
                                     <div class="card-body">
@@ -84,7 +80,7 @@
                                                     <select class="form-control" name="role" id="role">
                                                         <option value="">Select</option>
                                                         @foreach($roles as $role)
-                                                            <option value="{{$role->id}}" {{ $role->id == (int)old('role',$user->roles->first()->id) ? "selected" : "" }}>{{$role->name}}</option>
+                                                            <option value="{{$role->id}}" data-role="{{$role->name}}"s {{ $role->id == (int)old('role',$user->roles->first()->id) ? "selected" : "" }}>{{$role->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -102,7 +98,7 @@
                                                     <select class="form-control" name="service_type" id="service_type">
                                                         <option value="">Select</option>
                                                         @foreach($vendors as $vendor)
-                                                            <option value="{{old('service_type',$vendor)}}">{{ucwords(str_replace(['_and_','_'],['/',' '],$vendor))}}</option>
+                                                            <option value="{{old('service_type',$vendor)}}" {{ old('service_type') === $vendor ? "selected" : "" }}>{{ucwords(str_replace(['_and_','_'],['/',' '],$vendor))}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -120,7 +116,7 @@
                                                     <select class="form-control" name="venue_type" id="venue_type">
                                                         <option value="">Select</option>
                                                         @foreach($venues as $venue)
-                                                            <option value="{{old('venue_type',$venue)}}">{{ucwords(str_replace('_',' ',$venue))}}</option>
+                                                            <option value="{{old('venue_type',$venue)}}" {{ old('venue_type') === $venue ? "selected" : "" }}>{{ucwords(str_replace('_',' ',$venue))}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -170,14 +166,14 @@
 
 @push('scripts')
     <script>
-        var role = '{{old('role',$user->roles->first()->id)}}';
+        var role = $("#role").find(':selected').data('role');
         if (role) {
             switch (role) {
-                case "4":
+                case "Vendor":
                     $(".service_type_div").show();
                     $(".venue_type_div").hide();
                     break;
-                case "6":
+                case "Venue":
                     $(".venue_type_div").show();
                     $(".service_type_div").hide();
                     break;
@@ -186,15 +182,18 @@
                     $(".venue_type_div").hide();
                     break;
             }
+        } else {
+            $(".service_type_div").hide();
+            $(".venue_type_div").hide();
         }
 
         $("#role").change(function () {
-            switch ($(this).find(':selected').val()) {
-                case "4":
+            switch ($(this).find(':selected').data('role')) {
+                case "Vendor":
                     $(".service_type_div").show();
                     $(".venue_type_div").hide();
                     break;
-                case "6":
+                case "Venue":
                     $(".venue_type_div").show();
                     $(".service_type_div").hide();
                     break;

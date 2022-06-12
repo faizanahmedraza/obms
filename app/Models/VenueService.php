@@ -13,4 +13,8 @@ class VenueService extends Model
     protected $table = "venue_services";
 
     protected $guarded = [];
+
+    public function venue(){
+        return $this->belongsTo(Venue::class,'venue_id','user_id');
+    }
 }

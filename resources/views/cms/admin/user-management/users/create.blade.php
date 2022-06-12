@@ -94,7 +94,7 @@
                                                     <select class="form-control" name="role" id="role">
                                                         <option value="">Select</option>
                                                         @foreach($roles as $role)
-                                                            <option value="{{$role->id}}" {{ $role->id == (int)old('role') ? "selected" : "" }}>{{$role->name}}</option>
+                                                            <option value="{{$role->id}}" data-role="{{$role->name}}" {{ $role->id == (int)old('role') ? "selected" : "" }}>{{$role->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -183,14 +183,14 @@
 
 @push('scripts')
     <script>
-        var role = '{{old('role')}}';
+        var role = $("#role").find(':selected').data('role');
         if (role) {
             switch (role) {
-                case "4":
+                case "Vendor":
                     $(".service_type_div").show();
                     $(".venue_type_div").hide();
                     break;
-                case "6":
+                case "Venue":
                     $(".venue_type_div").show();
                     $(".service_type_div").hide();
                     break;
@@ -205,12 +205,12 @@
         }
 
         $("#role").change(function () {
-            switch ($(this).find(':selected').val()) {
-                case "4":
+            switch ($(this).find(':selected').data('role')) {
+                case "Vendor":
                     $(".service_type_div").show();
                     $(".venue_type_div").hide();
                     break;
-                case "6":
+                case "Venue":
                     $(".venue_type_div").show();
                     $(".service_type_div").hide();
                     break;

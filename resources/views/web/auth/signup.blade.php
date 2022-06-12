@@ -39,7 +39,7 @@
                             </ul>
                         </div>
                         <div class="mb-3">
-                            <p>Are you buyer or customer? <a href="{{route('web.customer.signup')}}" style="color: #2dbe6c;">Register Here</a></p>
+                            <p>Are you looking for venue and vendor services? <a href="{{route('web.customer.signup')}}" style="color: #2dbe6c;">Register Here</a></p>
                         </div>
                         <div class="tabs-content">
                             <div class="tab {{ ((session()->has('active_key') && session()->get('active_key') === "web.vendor.signup.store") || !session()->has('active_key')) ? 'active-tab' : '' }}" id="tab-1">

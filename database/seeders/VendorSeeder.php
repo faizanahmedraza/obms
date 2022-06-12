@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\VendorService;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -16,11 +17,14 @@ class VendorSeeder extends Seeder
     {
         Role::updateOrCreate(['name' => 'Vendor', 'guard_name' => 'web']);
 
-        $users = \App\Models\User::factory(20)->create();
+        $users = \App\Models\User::factory(5)->create();
 
         foreach ($users as $user) {
             $user->assignRole('Vendor');
-            $user->vendor()->create([]);
+            $vendor = $user->vendor()->create([]);
+            VendorService::factory()->create([
+                'vendor_id' => $vendor->user_id
+            ]);
         }
     }
 }

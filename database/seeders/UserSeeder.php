@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
     {
         Role::updateOrCreate(['name' => 'Customer', 'guard_name' => 'web']);
 
-        $users = \App\Models\User::factory(20)->create();
+        $users = \App\Models\User::factory(5)->create();
 
         foreach ($users as $user) {
             $user->assignRole('Customer');

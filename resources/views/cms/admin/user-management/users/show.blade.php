@@ -57,7 +57,7 @@
                                                 <label for="role">Role</label>
                                                 <input type="date" class="form-control" id="" name="role"
                                                        placeholder=""
-                                                       value="{{$user->roles->first()->id}}" readonly>
+                                                       value="{{$user->roles->first()->name}}" readonly>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -91,25 +91,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        var role = '{{old('role',$user->roles->first()->id)}}';
-        if (role) {
-            switch (role) {
-                case "4":
-                    $(".service_type_div").show();
-                    $(".venue_type_div").hide();
-                    break;
-                case "6":
-                    $(".venue_type_div").show();
-                    $(".service_type_div").hide();
-                    break;
-                default:
-                    $(".service_type_div").hide();
-                    $(".venue_type_div").hide();
-                    break;
-            }
-        }
-    </script>
-@endpush

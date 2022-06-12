@@ -25,7 +25,7 @@ class VenueController extends Controller
 
     public function __construct()
     {
-        $this->module = 'venue_services';
+        $this->module = 'venues';
         $ULP = '|' . $this->module . '_all|access_all'; //UPPER LEVEL PERMISSIONS
         $this->middleware('permission:' . $this->module . '_read' . $ULP, ['only' => ['index', 'show']]);
         $this->middleware('permission:' . $this->module . '_create' . $ULP, ['only' => ['create', 'store']]);
@@ -79,14 +79,14 @@ class VenueController extends Controller
         }
 
         $data['venue_id'] = $request->venue_owner;
-        $data['service_name'] = request()->service_name;
-        $data['slug'] = Str::slug(request()->service_name);
-        $data['service_type'] = request()->service_type;
-        $data['country'] = request()->country;
-        $data['city'] = request()->city;
-        $data['address'] = request()->address;
-        $data['price_per_hour'] = request()->price_per_hour;
-        $data['additional_details'] = request()->additional_details;
+        $data['venue_name'] = $request->venue_name;
+        $data['slug'] = Str::slug($request->venue_name);
+        $data['venue_type'] = $request->venue_type;
+        $data['country'] = $request->country;
+        $data['city'] = $request->city;
+        $data['address'] = $request->address;
+        $data['price_per_hour'] = $request->price_per_hour;
+        $data['additional_details'] = $request->additional_details;
 
         VenueService::create($data);
 
@@ -96,13 +96,13 @@ class VenueController extends Controller
 
     public function show($id)
     {
-        $venue = VenueService::where('id',$id)->firstOrFail();
+        $venue = VenueService::with(['venue','venue.user'])->where('id',$id)->firstOrFail();
         return view('cms.admin.venue.show', compact('venue'));
     }
 
     public function edit($id)
     {
-        $venue = VenueService::where('id',$id)->firstOrFail();
+        $venue = VenueService::with(['venue','venue.user'])->where('id',$id)->firstOrFail();
         $venueUsers = User::has('venue')->get();
         $venue_types = Venue::VENUE_TYPES;
         return view('cms.admin.venue.edit', compact('venueUsers', 'venue','venue_types'));
@@ -140,13 +140,14 @@ class VenueController extends Controller
         }
 
         $data['venue_id'] = $request->venue_owner;
-        $data['service_name'] = request()->service_name;
-        $data['service_type'] = request()->service_type;
-        $data['country'] = request()->country;
-        $data['city'] = request()->city;
-        $data['address'] = request()->address;
-        $data['price_per_hour'] = request()->price_per_hour;
-        $data['additional_details'] = request()->additional_details;
+        $data['venue_name'] = $request->venue_name;
+        $data['slug'] = Str::slug($request->venue_name);
+        $data['venue_type'] = $request->venue_type;
+        $data['country'] = $request->country;
+        $data['city'] = $request->city;
+        $data['address'] = $request->address;
+        $data['price_per_hour'] = $request->price_per_hour;
+        $data['additional_details'] = $request->additional_details;
 
         $venue->update($data);
 

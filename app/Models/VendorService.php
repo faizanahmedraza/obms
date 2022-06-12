@@ -13,4 +13,8 @@ class VendorService extends Model
     protected $table = "vendor_services";
 
     protected $guarded = [];
+
+    public function vendor(){
+        return $this->belongsTo(Vendor::class,'vendor_id','user_id');
+    }
 }

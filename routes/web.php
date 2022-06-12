@@ -204,4 +204,17 @@ Route::group(['namespace' => 'Cms'], function () {
             });
         });
     });
+
+    //Customer Section
+    Route::group(['namespace' => 'Customer', 'prefix' => 'customer/', 'as' => 'customer.'], function () {
+        //Protected Routes
+        Route::group(['middleware' => ['auth', 'check.blocked']], function () {
+            Route::get('/home', 'HomeController')->name('home');
+
+            // Only verified users may access this routes section
+            Route::group(['middleware' => 'verified'], function () {
+
+            });
+        });
+    });
 });

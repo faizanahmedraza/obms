@@ -15,4 +15,12 @@ class Venue extends Model
 
     const VENUE_TYPES = ['lawn','hotel','resort','banquet','marquee','meeting_hall'];
 
+    public function user(){
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    public function venues()
+    {
+        return $this->hasMany(VenueService::class,'venue_id','user_id');
+    }
 }

@@ -28,6 +28,17 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="venue_name">Vendor</label>
+                                            <input type="text" class="form-control" id="venue_name"
+                                                   name="venue_name"
+                                                   value="{{$vendor->vendor->user->name}}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="service_name">Service Name</label>

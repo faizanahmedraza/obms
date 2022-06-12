@@ -25,7 +25,7 @@ class VendorController extends Controller
 
     public function __construct()
     {
-        $this->module = 'vendor_services';
+        $this->module = 'services';
         $ULP = '|' . $this->module . '_all|access_all'; //UPPER LEVEL PERMISSIONS
         $this->middleware('permission:' . $this->module . '_read' . $ULP, ['only' => ['index', 'show']]);
         $this->middleware('permission:' . $this->module . '_create' . $ULP, ['only' => ['create', 'store']]);
@@ -95,13 +95,13 @@ class VendorController extends Controller
 
     public function show($id)
     {
-        $vendor = VendorService::where('id',$id)->firstOrFail();
+        $vendor = VendorService::with(['vendor','vendor.user'])->where('id',$id)->firstOrFail();
         return view('cms.admin.vendor.show', compact('vendor'));
     }
 
     public function edit($id)
     {
-        $vendor = VendorService::where('id',$id)->firstOrFail();
+        $vendor = VendorService::with(['vendor','vendor.user'])->where('id',$id)->firstOrFail();
         $vendorUsers = User::has('vendor')->get();
         $service_types = Vendor::VENDOR_TYPES;
         return view('cms.admin.vendor.edit', compact('vendorUsers', 'vendor','service_types'));

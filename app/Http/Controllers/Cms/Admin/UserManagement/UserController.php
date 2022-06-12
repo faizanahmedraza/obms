@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Wrappers\CloudinaryService;
 use App\Jobs\SendUserAccountVerificationEmailJob;
 use App\Mail\Verification;
+use App\Models\Customer;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorService;
@@ -95,10 +96,10 @@ class UserController extends Controller
             'gender' => 'sometimes|nullable|in:male,female,other|max:10',
             'dob' => 'sometimes|nullable|date',
             'role' => 'required|in:' . implode(',', Role::pluck('id')->toArray()),
-            'service_name' => 'nullable|required_if:role,4|string|max:150',
-            'service_type' => 'nullable|required_if:role,4|in:' . implode(',', Vendor::VENDOR_TYPES),
-            'venue_name' => 'nullable|required_if:role,6|string|max:150',
-            'venue_type' => 'nullable|required_if:role,6|in:' . implode(',', Venue::VENUE_TYPES),
+            'service_name' => 'nullable|required_if:role,Vendor|string|max:150',
+            'service_type' => 'nullable|required_if:role,Vendor|in:' . implode(',', Vendor::VENDOR_TYPES),
+            'venue_name' => 'nullable|required_if:role,Venue|string|max:150',
+            'venue_type' => 'nullable|required_if:role,Venue|in:' . implode(',', Venue::VENUE_TYPES),
         ];
 
         $messages = [
@@ -128,26 +129,28 @@ class UserController extends Controller
         $userData['name'] = $request->first_name . ' ' . $request->last_name;
         $userData['email'] = request()->email;
         $userData['dob'] = request()->dob;
-        $userData['gender'] = request()->gender;
+        $userData['gender'] = trim(request()->gender);
         $userData['password'] = Str::random('30');
         $userData['verification_token'] = Str::random('50');
 
         $user = User::create($userData);
 
-        if ($request->role == 4) {
+        $role = Role::where('id', (int)$request->role)->first();
+
+        if ($role->name === 'Vendor') {
             $user->assignRole('Vendor');
             $vendor = $user->vendor()->create([]);
             VendorService::create(['vendor_id' => $vendor->user_id, 'service_name' => $request->service_name, 'service_type' => $request->service_type, 'slug' => Str::slug($request->service_name)]);
-            $route = 'vendor.users';
-        } else if ($request->role == 3) {
+            $route = 'admin.vendor.users';
+        } else if ($role->name === 'Customer') {
             $user->assignRole('Customer');
             $user->customer()->create([]);
-            $route = 'customers';
-        } else if ($request->role == 6) {
+            $route = 'admin.customers';
+        } else if ($role->name === 'Venue') {
             $user->assignRole('Venue');
             $venue = $user->venue()->create([]);
             VenueService::create(['venue_id' => $venue->user_id, 'venue_name' => $request->venue_name, 'venue_type' => $request->venue_type, 'slug' => Str::slug($request->venue_name)]);
-            $route = 'venue.users';
+            $route = 'admin.venue.users';
         } else {
             $user->assignRole($request->role);
             $route = 'admin.users';
@@ -167,7 +170,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::where('id', '!=', Auth::id())->with(['roles', 'vendor', 'customer', 'venue'])->findOrFail($id);
+        $user = User::with(['roles', 'vendor', 'customer', 'venue'])->findOrFail($id);
         if (oldUrlAccessMatch('venue', 2) == "venue") {
             $pageTitle = "Details Venue User";
         } elseif (oldUrlAccessMatch('vendor', 2) == "vendor") {
@@ -198,18 +201,16 @@ class UserController extends Controller
     {
         $user = User::where('id', '!=', Auth::id())->with(['roles', 'vendor', 'customer', 'venue'])->findOrFail($id);
         $rules = [
-            'first_name' => 'required|max:55',
-            'last_name' => 'required|max:55',
-            'username' => 'required|alpha_num|max:255|unique:users,username,' . $user->id,
+            'name' => 'required|max:55',
             'avatar' => 'sometimes|nullable|image|mimes:jpeg,jpg,png|dimensions:min_width=50,min_height=60|max:100000', //max:1MB
             'email' => ['required', 'max:255', 'unique:users,email,' . $user->id],
-            'gender' => 'sometimes|nullable|in:male,female,other|max:10',
+            'gender' => 'sometimes|nullable|in:male,female|max:10',
             'dob' => 'sometimes|nullable|date',
             'role' => 'required|in:' . implode(',', Role::pluck('id')->toArray()),
-            'service_name' => 'nullable|required_if:role,4|string|max:150',
-            'service_type' => 'nullable|required_if:role,4|in:' . implode(',', Vendor::VENDOR_TYPES),
-            'venue_name' => 'nullable|required_if:role,6|string|max:150',
-            'venue_type' => 'nullable|required_if:role,6|in:' . implode(',', Venue::VENUE_TYPES),
+            'service_name' => 'nullable|required_if:role,Vendor|string|max:150',
+            'service_type' => 'nullable|required_if:role,Vendor|in:' . implode(',', Vendor::VENDOR_TYPES),
+            'venue_name' => 'nullable|required_if:role,Venue|string|max:150',
+            'venue_type' => 'nullable|required_if:role,Venue|in:' . implode(',', Venue::VENUE_TYPES),
         ];
 
         $messages = [
@@ -230,51 +231,49 @@ class UserController extends Controller
                 ->withInput();
         }
 
-        if (in_array('Super Admin', request()->roles)) {
-            return redirect()
-                ->back()
-                ->withErrors(['errors' => 'Super Admin role is not allowed.'])
-                ->withInput();
-        }
-
         if (!empty(request()->avatar)) {
             $file = request()->file('avatar');
             $ext = $file->getclientoriginalextension();
             $userData['avatar'] = $file->storeAs('avatars', 'avatar-' . now()->timestamp . '.' . $ext);
         }
-
         $userData['name'] = $request->name;
         $userData['email'] = request()->email;
         $userData['dob'] = request()->dob;
-        $userData['gender'] = request()->gender;
+        $userData['gender'] = trim(request()->gender);
+
+        $role = Role::where('id', (int)$request->role)->firstOrFail();
+
+        if ($user->roles->first()->name === 'Vendor') {
+            $vendor = Vendor::where('user_id',$user->id)->first();
+            $vendor->delete();
+        } else if ($user->roles->first()->name === 'Customer') {
+            $customer = Customer::where('user_id',$user->id)->first();
+            $customer->delete();
+        } else if ($user->roles->first()->name === 'Venue') {
+            $venue = Venue::where('user_id',$user->id)->first();
+            $venue->delete();
+        }
 
         $user->update($userData);
 
-        if ($user->roles->first()->id == 4) {
-            $user->vendor()->dissociate()->save();
-        } else if ($user->roles->first()->id == 3) {
-            $user->customer()->dissociate()->save();
-        } else if ($user->roles->first()->id == 6) {
-            $user->venue()->dissociate()->save();
-        } else {
-            $user->scopeRole($request->role);
-        }
 
-        $route = 'admin.users';
-        if ($request->role == 4) {
-            $user->scopeRole('Vendor');
+        if ($role->name === 'Vendor') {
+            $user->assignRole('Vendor');
             $vendor = $user->vendor()->create([]);
             VendorService::create(['vendor_id' => $vendor->user_id, 'service_name' => $request->service_name, 'service_type' => $request->service_type, 'slug' => Str::slug($request->service_name)]);
-            $route = 'vendor.users';
-        } else if ($request->role == 3) {
-            $user->scopeRole('Customer');
+            $route = 'admin.vendor.users';
+        } else if ($role->name === 'Customer') {
+            $user->assignRole('Customer');
             $user->customer()->create([]);
-            $route = 'customers';
-        } else if ($request->role == 6) {
-            $user->scopeRole('Venue');
+            $route = 'admin.customers';
+        } else if ($role->name === 'Venue') {
+            $user->assignRole('Venue');
             $venue = $user->venue()->create([]);
             VenueService::create(['venue_id' => $venue->user_id, 'venue_name' => $request->venue_name, 'venue_type' => $request->venue_type, 'slug' => Str::slug($request->venue_name)]);
-            $route = 'venue.users';
+            $route = 'admin.venue.users';
+        } else {
+            $user->syncRoles($request->role);
+            $route = 'admin.users';
         }
 
         return redirect()->route($route)->with('success', 'User successfully updated.');

@@ -56,7 +56,32 @@
                         @endcan
                     @endcan
                     @if(in_array(auth()->user()->roles->first()->name,['Vendor','Venue']))
-                        @can('vendor_services_all')
+                        @can('services_all')
+                            <li class="dropdown"><a
+                                        class="nav-link menu-title {{ request()->is('vendor/vendors*') ? 'active' : '' }}"
+                                        href="javascript:void(0)"><i
+                                            data-feather="archive"></i><span>Vendor Services</span></a>
+                                <ul class="nav-submenu menu-content">
+                                    <li>
+                                        <a href="{{route('vendor.vendors.index')}}" {{ request()->is('vendor/vendors*') ? 'active' : '' }}>Vendor
+                                            Services</a></li>
+                                </ul>
+                            </li>
+                        @endcan
+                        @can('venues_all')
+                            <li class="dropdown"><a
+                                        class="nav-link menu-title {{ request()->is('venue/venues*') ? 'active' : '' }}"
+                                        href="javascript:void(0)"><i
+                                            data-feather="layers"></i><span>Venue Services</span></a>
+                                <ul class="nav-submenu menu-content">
+                                    <li>
+                                        <a href="{{route('venue.venues.index')}}" {{ request()->is('venue/venues*') ? 'active' : '' }}>Venue
+                                            Services</a></li>
+                                </ul>
+                            </li>
+                        @endcan
+                    @else
+                        @can('services_all')
                             <li class="dropdown"><a
                                         class="nav-link menu-title {{ request()->is('admin/vendors*') ? 'active' : '' }}"
                                         href="javascript:void(0)"><i
@@ -68,7 +93,7 @@
                                 </ul>
                             </li>
                         @endcan
-                        @can('venue_services_all')
+                        @can('venues_all')
                             <li class="dropdown"><a
                                         class="nav-link menu-title {{ request()->is('admin/venues*') ? 'active' : '' }}"
                                         href="javascript:void(0)"><i
@@ -76,31 +101,6 @@
                                 <ul class="nav-submenu menu-content">
                                     <li>
                                         <a href="{{route('admin.venues.index')}}" {{ request()->is('admin/venues*') ? 'active' : '' }}>Venue
-                                            Services</a></li>
-                                </ul>
-                            </li>
-                        @endcan
-                    @else
-                        @can('vendor_services_all')
-                            <li class="dropdown"><a
-                                        class="nav-link menu-title {{ request()->is('admin/vendors*') ? 'active' : '' }}"
-                                        href="javascript:void(0)"><i
-                                            data-feather="archive"></i><span>Vendor Services</span></a>
-                                <ul class="nav-submenu menu-content">
-                                    <li>
-                                        <a href="{{route('admin.vendors.index')}}" {{ request()->is('admin/vendors*') ? 'active' : '' }}>Vendor
-                                            Services</a></li>
-                                </ul>
-                            </li>
-                        @endcan
-                        @can('venue_services_all')
-                            <li class="dropdown"><a
-                                        class="nav-link menu-title {{ request()->is('admin/roles*') ? 'active' : '' }}"
-                                        href="javascript:void(0)"><i
-                                            data-feather="layers"></i><span>Venue Services</span></a>
-                                <ul class="nav-submenu menu-content">
-                                    <li>
-                                        <a href="{{route('admin.venues.index')}}" {{ request()->is('admin/roles*') ? 'active' : '' }}>Venue
                                             Services</a></li>
                                 </ul>
                             </li>
