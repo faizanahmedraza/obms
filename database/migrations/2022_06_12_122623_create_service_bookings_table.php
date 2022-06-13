@@ -13,8 +13,14 @@ class CreateServiceBookingsTable extends Migration
      */
     public function up()
     {
+        if (Schema::hasColumn('customers', 'user_id')) {
+            Schema::table('customers', function (Blueprint $table) {
+                $table->unique('user_id');
+            });
+        }
         Schema::create('service_bookings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('customer_id')->constrained('customers', 'user_id')->cascadeOnDelete();
             $table->foreignId('vendor_service_id')->nullable()->constrained('vendor_services', 'id')->cascadeOnDelete();
             $table->date('date');
             $table->string('start_time');

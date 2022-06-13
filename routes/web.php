@@ -161,7 +161,7 @@ Route::group(['namespace' => 'Cms'], function () {
                     Route::delete('/users/{id}/delete', 'UserController@destroy')->name('users.delete');
 
                     // Roles and  Permissions Management
-                    Route::delete('/roles/{id}/delete','RoleController@destroy')->name('roles.delete');
+                    Route::delete('/roles/{id}/delete', 'RoleController@destroy')->name('roles.delete');
                     Route::resources([
                         'roles' => 'RoleController',
                     ], [
@@ -169,10 +169,14 @@ Route::group(['namespace' => 'Cms'], function () {
                     ]);
                 });
 
-                Route::delete('/vendors/{id}/delete','VendorController@destroy')->name('vendors.delete');
-                Route::resource('vendors','VendorController')->parameters(['vendors'=>'id'])->except('destroy');
-                Route::delete('/venues/{id}/delete','VenueController@destroy')->name('venues.delete');
-                Route::resource('venues','VenueController')->parameters(['venues'=>'id'])->except('destroy');
+                Route::delete('/vendors/{id}/delete', 'VendorController@destroy')->name('vendors.delete');
+                Route::resource('vendors', 'VendorController')->parameters(['vendors' => 'id'])->except('destroy');
+                Route::delete('/venues/{id}/delete', 'VenueController@destroy')->name('venues.delete');
+                Route::resource('venues', 'VenueController')->parameters(['venues' => 'id'])->except('destroy');
+                Route::delete('/venue-bookings/{id}/delete', 'VenueBookingController@destroy')->name('venue-bookings.delete');
+                Route::resource('venue-bookings', 'VenueBookingController')->parameters(['venue-bookings' => 'id'])->except('destroy');
+                Route::delete('/vendor-bookings/{id}/delete', 'VendorBookingController@destroy')->name('vendor-bookings.delete');
+                Route::resource('vendor-bookings', 'VendorBookingController')->parameters(['vendor-bookings' => 'id'])->except('destroy');
             });
         });
     });
@@ -185,8 +189,8 @@ Route::group(['namespace' => 'Cms'], function () {
 
             // Only verified users may access this routes section
             Route::group(['middleware' => 'verified'], function () {
-                Route::delete('/vendors/{id}/delete','VendorController@destroy')->name('vendors.delete');
-                Route::resource('vendors','VendorController')->parameters(['vendors'=>'id'])->except('destroy');
+                Route::delete('/vendors/{id}/delete', 'VendorController@destroy')->name('vendors.delete');
+                Route::resource('vendors', 'VendorController')->parameters(['vendors' => 'id'])->except('destroy');
             });
         });
     });
@@ -199,8 +203,9 @@ Route::group(['namespace' => 'Cms'], function () {
 
             // Only verified users may access this routes section
             Route::group(['middleware' => 'verified'], function () {
-                Route::delete('/venues/{id}/delete','VenueController@destroy')->name('venues.delete');
-                Route::resource('venues','VenueController')->parameters(['venues'=>'id'])->except('destroy');
+                Route::delete('/venues/{id}/delete', 'VenueController@destroy')->name('venues.delete');
+                Route::resource('venues', 'VenueController')->parameters(['venues' => 'id'])->except('destroy');
+
             });
         });
     });
@@ -216,5 +221,13 @@ Route::group(['namespace' => 'Cms'], function () {
 
             });
         });
+    });
+
+    //Common routes
+    Route::group(['middleware' => ['auth', 'check.blocked', 'verified']], function () {
+        Route::delete('/venue-bookings/{id}/delete', 'VenueBookingController@destroy')->name('venue-bookings.delete');
+        Route::resource('venue-bookings', 'VenueBookingController')->parameters(['venue_booking' => 'id'])->except('destroy');
+        Route::delete('/vendor-bookings/{id}/delete', 'VendorBookingController@destroy')->name('vendor-bookings.delete');
+        Route::resource('vendor-bookings', 'VendorBookingController')->parameters(['vendor_booking' => 'id'])->except('destroy');
     });
 });

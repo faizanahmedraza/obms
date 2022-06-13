@@ -15,7 +15,8 @@ class CreateVenueBookingsTable extends Migration
     {
         Schema::create('venue_bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('venue_service_id')->nullable()->constrained('venue_services', 'id')->cascadeOnDelete();
+            $table->foreignId('customer_id')->constrained('customers', 'user_id')->cascadeOnDelete();
+            $table->foreignId('venue_service_id')->constrained('venue_services', 'id')->cascadeOnDelete();
             $table->date('date');
             $table->string('start_time');
             $table->string('end_time');

@@ -105,6 +105,28 @@
                                 </ul>
                             </li>
                         @endcan
+                        @can('venue_bookings_all')
+                            <li class="dropdown"><a
+                                        class="nav-link menu-title {{ request()->is('admin/venue-bookings*') ? 'active' : '' }}"
+                                        href="javascript:void(0)"><i
+                                            data-feather="layers"></i><span>Venue Bookings</span></a>
+                                <ul class="nav-submenu menu-content">
+                                    <li>
+                                        <a href="{{route('admin.venue-bookings.index')}}" {{ request()->is('admin/venue-bookings*') ? 'active' : '' }}>Venue Bookings</a></li>
+                                </ul>
+                            </li>
+                        @endcan
+                        @can('vendor_bookings_all')
+                            <li class="dropdown"><a
+                                        class="nav-link menu-title {{ request()->is('admin/vendor-bookings*') ? 'active' : '' }}"
+                                        href="javascript:void(0)"><i
+                                            data-feather="layers"></i><span>Vendor Bookings</span></a>
+                                <ul class="nav-submenu menu-content">
+                                    <li>
+                                        <a href="{{route('admin.vendor-bookings.index')}}" {{ request()->is('admin/vendor-bookings*') ? 'active' : '' }}>Vendor Bookings</a></li>
+                                </ul>
+                            </li>
+                        @endcan
                     @endif
                 </ul>
             </div>

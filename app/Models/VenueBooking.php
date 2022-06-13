@@ -18,4 +18,9 @@ class VenueBooking extends Model
     {
         return $this->belongsTo(VenueService::class, 'venue_service_id', 'id');
     }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class,'customer_id','user_id');
+    }
 }

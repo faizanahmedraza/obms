@@ -58,6 +58,7 @@ class VenueController extends Controller
             'address' => 'required|string|max:200',
             'price_per_hour' => 'required|numeric',
             'additional_details' => 'nullable|string',
+            'is_vendors_included' => 'required|in:0,1',
         ];
 
         $userData = [];
@@ -86,6 +87,7 @@ class VenueController extends Controller
         $data['address'] = request()->address;
         $data['price_per_hour'] = request()->price_per_hour;
         $data['additional_details'] = request()->additional_details;
+        $data['is_vendors_included'] = $request->is_vendors_included;
 
         VenueService::create($data);
 
@@ -120,6 +122,7 @@ class VenueController extends Controller
             'address' => 'required|string|max:200',
             'price_per_hour' => 'required|numeric',
             'additional_details' => 'nullable|string',
+            'is_vendors_included' => 'required|in:0,1',
         ];
 
         $data = [];
@@ -146,6 +149,7 @@ class VenueController extends Controller
         $data['address'] = request()->address;
         $data['price_per_hour'] = request()->price_per_hour;
         $data['additional_details'] = request()->additional_details;
+        $data['is_vendors_included'] = $request->is_vendors_included;
 
         $venue->update($data);
 

@@ -128,11 +128,26 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="additional_details">Additional Details</label>
                                                     <textarea class="form-control" name="additional_details"
                                                               id="additional_details">{{old('additional_details',$venue->additional_details)}}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-check">
+                                                    <label>Is Vendor Services Included?</label><br>
+                                                    <label class="form-radio-label">
+                                                        <input class="form-radio-input" type="radio" name="is_vendors_included"
+                                                               value="1" {{ old('is_vendors_included',$venue->is_vendors_included) == 1 ? "checked" : ""}}>
+                                                        <span class="form-radio-sign">Yes</span>
+                                                    </label>
+                                                    <label class="form-radio-label ml-3">
+                                                        <input class="form-radio-input" type="radio" name="is_vendors_included"
+                                                               value="0" {{ old('is_vendors_included',$venue->is_vendors_included) == 0 ? "checked" : ""}}>
+                                                        <span class="form-radio-sign">No</span>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
