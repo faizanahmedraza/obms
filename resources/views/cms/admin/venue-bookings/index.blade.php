@@ -46,9 +46,9 @@
                                 @forelse($bookings as $booking)
                                     <tr>
                                         <td>{{ucwords($booking->venueService->venue_name)}}</td>
-                                        <td>{{ucwords($booking->customer->name)}}</td>
+                                        <td>{{ucwords($booking->customer->user->name)}}</td>
                                         <td>${{number_format($booking->total_price,2)}}</td>
-                                        <td>{{$booking->date->diffForHumans()}}</td>
+                                        <td>{{$booking->date}}</td>
                                         <td>{{$booking->created_at->diffForHumans()}}</td>
                                         <td>
                                             <a href="{{route('admin.venue-bookings.show',['id' => $booking->id])}}"

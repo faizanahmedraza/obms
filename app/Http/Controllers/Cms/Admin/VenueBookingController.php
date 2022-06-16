@@ -71,7 +71,12 @@ class VenueBookingController extends Controller
 
         DB::beginTransaction();
 
-        $venue = VenueService::where('id',(int)$request->venue)->first();
+        $venue = VenueService::where('id', (int)$request->venue)->first();
+
+        if (empty($venue->price_per_hour)) {
+            return back()->withErrors(['errors' => 'Kindly submit complete details of this venue before booking'])->withInput();
+        }
+
         $requestStartTime = Carbon::parse($request->start_time);
         $requestEndTime = Carbon::parse($request->end_time);
         $differenceInHours = $requestEndTime->diffInHours($requestStartTime);
@@ -81,11 +86,11 @@ class VenueBookingController extends Controller
         $data['customer_id'] = (int)$request->customer;
         $data['venue_service_id'] = $venue->id;
         $data['date'] = $request->date;
-        $data['start_time'] = $request->date;
-        $data['end_time'] = $request->date;
+        $data['start_time'] = $request->start_time;
+        $data['end_time'] = $request->end_time;
         $data['total_price'] = $totalPrice;
 
-        VenueService::create($data);
+        VenueBooking::create($data);
 
         DB::commit();
         return redirect()->route('admin.venue-bookings.index')->with('success', 'Successfully added.');
@@ -93,7 +98,7 @@ class VenueBookingController extends Controller
 
     public function show($id)
     {
-        $booking = VenueBooking::with(['venueService', 'venueService.venue'])->where('id', $id)->firstOrFail();
+        $booking = VenueBooking::with(['venueService', 'venueService.venue','customer','customer.user'])->where('id', $id)->firstOrFail();
         return view('cms.admin.venue-bookings.show', compact('booking'));
     }
 
@@ -127,7 +132,7 @@ class VenueBookingController extends Controller
                 ->withInput();
         }
 
-        $venue = VenueService::where('id',(int)$request->venue)->first();
+        $venue = VenueService::where('id', (int)$request->venue)->first();
         $requestStartTime = Carbon::parse($request->start_time);
         $requestEndTime = Carbon::parse($request->end_time);
         $differenceInHours = $requestEndTime->diffInHours($requestStartTime);
@@ -137,8 +142,8 @@ class VenueBookingController extends Controller
         $data['customer_id'] = (int)$request->customer;
         $data['venue_service_id'] = $venue->id;
         $data['date'] = $request->date;
-        $data['start_time'] = $request->date;
-        $data['end_time'] = $request->date;
+        $data['start_time'] = $request->start_time;
+        $data['end_time'] = $request->end_time;
         $data['total_price'] = $totalPrice;
 
         $booking->update($data);

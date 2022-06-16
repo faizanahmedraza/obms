@@ -79,6 +79,7 @@ class SignUpController extends Controller
         DB::beginTransaction();
 
         $userData['password'] = Str::random(30);
+        $userData['verification_token'] = Str::random(50);
         $user = User::create($userData);
 
         if ($request->role == "Vendor") {

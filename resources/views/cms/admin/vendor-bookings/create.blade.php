@@ -31,7 +31,7 @@
                                     @csrf
                                     @if (session()->has('error'))
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <strong>Whoops!</strong> {{session()->get('error')}}
+                                            <strong>Success!</strong> {{session()->get('error')}}
                                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                     aria-label="Close"></button>
                                         </div>
@@ -51,7 +51,7 @@
                                     <div class="card-body">
                                         <div class="row mb-2">
                                             <div class="col-md-6">
-                                                <label for="vendor">Customer</label>
+                                                <label for="customer">Customer</label>
                                                 <select class="form-control" name="customer" id="customer">
                                                     <option value="">Select</option>
                                                     @foreach($customers as $val)

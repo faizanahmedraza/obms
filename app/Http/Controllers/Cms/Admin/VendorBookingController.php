@@ -63,6 +63,11 @@ class VendorBookingController extends Controller
         DB::beginTransaction();
 
         $vendor = VendorService::where('id',(int)$request->venue)->first();
+
+        if (empty($vendor->price_per_hour)) {
+            return back()->withErrors(['errors' => 'Kindly submit complete details of this service before booking'])->withInput();
+        }
+
         $requestStartTime = Carbon::parse($request->start_time);
         $requestEndTime = Carbon::parse($request->end_time);
         $differenceInHours = $requestEndTime->diffInHours($requestStartTime);
@@ -76,7 +81,7 @@ class VendorBookingController extends Controller
         $data['end_time'] = $request->date;
         $data['total_price'] = $totalPrice;
 
-        VenueService::create($data);
+        ServiceBooking::create($data);
 
         DB::commit();
         return redirect()->route('admin.vendor-bookings.index')->with('success', 'Successfully added.');
@@ -84,13 +89,13 @@ class VendorBookingController extends Controller
 
     public function show($id)
     {
-        $booking = ServiceBooking::with(['venueService', 'venueService.venue'])->where('id', $id)->firstOrFail();
+        $booking = ServiceBooking::with(['vendorService', 'vendorService.vendor'])->where('id', $id)->firstOrFail();
         return view('cms.admin.vendor-booking.show', compact('booking'));
     }
 
     public function edit($id)
     {
-        $booking = ServiceBooking::with(['venueService', 'venueService.venue'])->where('id', $id)->firstOrFail();
+        $booking = ServiceBooking::with(['vendorService', 'vendorService.vendor','customer','customer.user'])->where('id', $id)->firstOrFail();
         $customers = User::has('customer')->get();
         $vendors = VendorService::latest()->get();
         return view('cms.admin.vendor-booking.edit', compact('booking', 'customers', 'vendors'));
@@ -98,7 +103,7 @@ class VendorBookingController extends Controller
 
     public function update($id, Request $request)
     {
-        $booking = ServiceBooking::with(['venueService', 'venueService.venue'])->where('id', $id)->firstOrFail();
+        $booking = ServiceBooking::with(['vendorService', 'vendorService.vendor'])->where('id', $id)->firstOrFail();
         $rules = [
             'customer' => 'required|in:' . implode(',', User::has('customer')->pluck('id')->toArray()),
             'vendor' => 'required|in:' . implode(',', VendorService::pluck('id')->toArray()),
