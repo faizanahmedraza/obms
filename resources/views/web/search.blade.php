@@ -122,6 +122,7 @@
                                         </div>
                                     </div>
                                     @empty
+                                        <p>No Results Found!</p>
                                     @endforelse
                                 </div>
                             </div>
