@@ -45,40 +45,40 @@
                             <ul class="navigation clearfix">
                                 <li class="dropdown"><a href=""><span>Venues</span></a>
                                     <ul>
-                                        <li><a href="{{route('web.lawns')}}">Lawns</a></li>
-                                        <li><a href="{{route('web.hotels')}}">Hotels</a></li>
-                                        <li><a href="{{route('web.resorts')}}">Resorts</a></li>
-                                        <li><a href="{{route('web.banquets')}}">Banquet Halls</a></li>
-                                        <li><a href="{{route('web.marriage.halls')}}">Marriage Halls</a></li>
+                                        <li><a href="{{route('web.venues',['param' => \App\Models\Venue::VENUE_TYPES[0]])}}">Lawns</a></li>
+                                        <li><a href="{{route('web.venues',['param' => \App\Models\Venue::VENUE_TYPES[1]])}}">Hotels</a></li>
+                                        <li><a href="{{route('web.venues',['param' => \App\Models\Venue::VENUE_TYPES[2]])}}">Resorts</a></li>
+                                        <li><a href="{{route('web.venues',['param' => \App\Models\Venue::VENUE_TYPES[3]])}}">Banquet Halls</a></li>
+                                        <li><a href="{{route('web.venues',['param' => \App\Models\Venue::VENUE_TYPES[4]])}}">Marriage Halls</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown"><a href=""><span>Events</span></a>
-                                    <ul>
-                                        <li><a href="">Engagements</a></li>
-                                        <li><a href="">Weddings</a></li>
-                                        <li><a href="">After Weddings</a></li>
-                                        <li><a href="">Birthdays</a></li>
-                                        <li><a href="">Rehearsal Dinners</a></li>
-                                        <li><a href="">Corporate Events</a></li>
-                                        <li><a href="">Holiday Parties</a></li>
-                                    </ul>
-                                </li>
+{{--                                <li class="dropdown"><a href=""><span>Events</span></a>--}}
+{{--                                    <ul>--}}
+{{--                                        <li><a href="">Engagements</a></li>--}}
+{{--                                        <li><a href="">Weddings</a></li>--}}
+{{--                                        <li><a href="">After Weddings</a></li>--}}
+{{--                                        <li><a href="">Birthdays</a></li>--}}
+{{--                                        <li><a href="">Rehearsal Dinners</a></li>--}}
+{{--                                        <li><a href="">Corporate Events</a></li>--}}
+{{--                                        <li><a href="">Holiday Parties</a></li>--}}
+{{--                                    </ul>--}}
+{{--                                </li>--}}
                                 <li class="dropdown"><a href=""><span>Vendors</span></a>
                                     <ul>
-                                        <li><a href="">Food</a></li>
-                                        <li><a href="">Makeup</a></li>
-                                        <li><a href="">Groom Wear</a></li>
-                                        <li><a href="">Bridal Wear</a></li>
-                                        <li><a href="">Rental Cars</a></li>
-                                        <li><a href="">Invites & Gifts</a></li>
-                                        <li><a href="">Wedding Entertainment</a></li>
-                                        <li><a href="">Jewellery & Accessories</a></li>
-                                        <li><a href="">Planning & Decor / Florists</a></li>
-                                        <li><a href="">Photographers & Choreographers</a></li>
+                                        <li><a href="{{route('web.vendors',['param' => \App\Models\Vendor::VENDOR_TYPES[0]])}}">Food</a></li>
+                                        <li><a href="{{route('web.vendors',['param' => \App\Models\Vendor::VENDOR_TYPES[1]])}}">Makeup</a></li>
+                                        <li><a href="{{route('web.vendors',['param' => \App\Models\Vendor::VENDOR_TYPES[2]])}}">Groom Wear</a></li>
+                                        <li><a href="{{route('web.vendors',['param' => \App\Models\Vendor::VENDOR_TYPES[3]])}}">Bridal Wear</a></li>
+                                        <li><a href="{{route('web.vendors',['param' => \App\Models\Vendor::VENDOR_TYPES[4]])}}">Rental Cars</a></li>
+                                        <li><a href="{{route('web.vendors',['param' => \App\Models\Vendor::VENDOR_TYPES[5]])}}">Invites & Gifts</a></li>
+{{--                                        <li><a href="{{route('web.vendors',['param' => \App\Models\Vendor::VENDOR_TYPES['food']])}}">Wedding Entertainment</a></li>--}}
+                                        <li><a href="{{route('web.vendors',['param' => \App\Models\Vendor::VENDOR_TYPES[6]])}}">Jewellery & Accessories</a></li>
+                                        <li><a href="{{route('web.vendors',['param' => \App\Models\Vendor::VENDOR_TYPES[7]])}}">Planning & Decor / Florists</a></li>
+                                        <li><a href="{{route('web.vendors',['param' => \App\Models\Vendor::VENDOR_TYPES[8]])}}">Photographers & Choreographers</a></li>
                                     </ul>
                                 </li>
-                                <li><a href=""><span>Gallery</span></a></li>
-                                <li><a href=""><span>Contact Us</span></a></li>
+                                <li><a href="{{route('web.gallery')}}"><span>Gallery</span></a></li>
+                                <li><a href="{{route('web.contact-us')}}"><span>Contact Us</span></a></li>
                             </ul>
                         </div>
                     </nav>

@@ -62,49 +62,50 @@
                 <div class="search-field">
                     <div class="inner-box">
                         <div class="top-search">
-                            <form action="" method="post"
+                            <form action="{{route('web.search')}}" method="POST"
                                   class="search-form">
+                                @csrf
                                 <div class="row clearfix">
-                                    <div class="col-lg-4 col-md-12 col-sm-12 column">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 column">
                                         <div class="form-group">
                                             <label>Search Venue</label>
                                             <div class="field-input">
                                                 <i class="fas fa-search"></i>
-                                                <input type="search" name="search-field"
-                                                       placeholder="Search by Venue, Location or Event Type..."
-                                                       required="">
+                                                    <input type="search" value="{{request('search')}}" name="search"
+                                                           placeholder="Search by Venue, Vendor Service ..."
+                                                           required="">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12 column">
-                                        <div class="form-group">
-                                            <label>Location</label>
-                                            <div class="select-box">
-                                                <i class="far fa-compass"></i>
-                                                <select class="wide">
-                                                    <option data-display="Input location">Input location</option>
-                                                    <option value="1">New York</option>
-                                                    <option value="2">California</option>
-                                                    <option value="3">London</option>
-                                                    <option value="4">Maxico</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12 column">
-                                        <div class="form-group">
-                                            <label>Event Type</label>
-                                            <div class="select-box">
-                                                <select class="wide">
-                                                    <option value="">All Type</option>
-                                                    <option value="1">Laxury</option>
-                                                    <option value="2">Classic</option>
-                                                    <option value="3">Modern</option>
-                                                    <option value="4">New</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {{--                                    <div class="col-lg-4 col-md-6 col-sm-12 column">--}}
+                                    {{--                                        <div class="form-group">--}}
+                                    {{--                                            <label>Location</label>--}}
+                                    {{--                                            <div class="select-box">--}}
+                                    {{--                                                <i class="far fa-compass"></i>--}}
+                                    {{--                                                <select class="wide">--}}
+                                    {{--                                                    <option data-display="Input location">Input location</option>--}}
+                                    {{--                                                    <option value="1">New York</option>--}}
+                                    {{--                                                    <option value="2">California</option>--}}
+                                    {{--                                                    <option value="3">London</option>--}}
+                                    {{--                                                    <option value="4">Maxico</option>--}}
+                                    {{--                                                </select>--}}
+                                    {{--                                            </div>--}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    </div>--}}
+                                    {{--                                    <div class="col-lg-4 col-md-6 col-sm-12 column">--}}
+                                    {{--                                        <div class="form-group">--}}
+                                    {{--                                            <label>Event Type</label>--}}
+                                    {{--                                            <div class="select-box">--}}
+                                    {{--                                                <select class="wide">--}}
+                                    {{--                                                    <option value="">All Type</option>--}}
+                                    {{--                                                    <option value="1">Laxury</option>--}}
+                                    {{--                                                    <option value="2">Classic</option>--}}
+                                    {{--                                                    <option value="3">Modern</option>--}}
+                                    {{--                                                    <option value="4">New</option>--}}
+                                    {{--                                                </select>--}}
+                                    {{--                                            </div>--}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    </div>--}}
                                 </div>
                                 <div class="search-btn">
                                     <button type="submit"><i class="fas fa-search"></i>Search</button>

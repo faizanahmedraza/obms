@@ -22,18 +22,19 @@ Route::get('/banquets', function () {
 Route::group(['namespace' => 'Web', 'as' => 'web.'], function () {
     Route::get('/', 'HomeController')->name('home');
 
-    Route::group(['namespace' => 'Venues', 'prefix' => 'venues'], function () {
-        Route::get('/banquets', 'BanquetController@index')->name('banquets');
-        Route::get('/banquets/{id}', 'BanquetController@show')->name('banquets.details');
-        Route::get('/lawns', 'LawnController@index')->name('lawns');
-        Route::get('/lawns/{id}', 'LawnController@show')->name('lawns.details');
-        Route::get('/hotels', 'HotelController@index')->name('hotels');
-        Route::get('/hotels/{id}', 'HotelController@show')->name('hotels.details');
-        Route::get('/marriage-halls', 'MarriageController@index')->name('marriage.halls');
-        Route::get('/marriage-halls/{id}', 'MarriageController@show')->name('marriage.halls.details');
-        Route::get('/resorts', 'ResortController@index')->name('resorts');
-        Route::get('/resorts/{id}', 'ResortController@show')->name('resorts.details');
+    Route::group(['namespace' => 'Venues'], function () {
+        Route::get('/venues/{param}', 'VenueController@index')->name('venues');
+        Route::get('/venues/{param}/{id}', 'VenueController@show')->name('venues.detail');
     });
+
+    Route::group(['namespace' => 'Vendors'], function () {
+        Route::get('/vendors/{param}', 'VendorController@index')->name('vendors');
+        Route::get('/vendors/{param}/{id}', 'VendorController@show')->name('vendors.detail');
+    });
+
+    Route::get('/gallery', 'GalleryController@index')->name('gallery');
+    Route::get('/contact-us', 'ContactUsController@index')->name('contact-us');
+    Route::post('/search', 'SearchController@index')->name('search');
 
     //Authentication and Authorization
     Route::group(['namespace' => 'Auth'], function () {

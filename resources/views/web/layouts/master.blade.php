@@ -187,7 +187,7 @@
     </button>
 </div>
 
-
+{{ \TawkTo::widgetCode() }}
 <!-- jequery plugins -->
 <script src="{{ asset('assets/web/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/web/js/popper.min.js') }}"></script>

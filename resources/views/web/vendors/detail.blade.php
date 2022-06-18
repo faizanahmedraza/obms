@@ -5,13 +5,13 @@
 
 @section('content')
     <!--Page Title-->
-    <section class="page-title centred" style="background-image: url({{$venue->image}});">
+    <section class="page-title centred" style="background-image: url({{$vendor->image}});">
         <div class="auto-container">
             <div class="content-box clearfix">
-                <h1>{{$venue_title}} Details</h1>
+                <h1>{{$vendor_title}} Details</h1>
                 <ul class="bread-crumb clearfix">
                     <li><a href="/">Home</a></li>
-                    <li>{{$venue_title}} Details</li>
+                    <li>{{$vendor_title}} Details</li>
                 </ul>
             </div>
         </div>
@@ -25,14 +25,14 @@
             <div class="agent-details-content">
                 <div class="agents-block-one">
                     <div class="inner-box mr-0">
-                        <iframe width="100%" height="583" src="{{$venue->price_per_hour}}"
+                        <iframe width="100%" height="583" src="{{$vendor->price_per_hour}}"
                                 frameborder="0" allowfullscreen=""
                                 allow="vr" data-uw-styling-context="true"></iframe>
                         <div class="content-box pl-0">
                             <div class="upper clearfix">
                                 <div class="title-inner pull-left">
-                                    <h4>{{$venue->venue_name}}</h4>
-                                    <span class="designation">{{ucwords($venue_title)}}</span>
+                                    <h4>{{$vendor->vendor_name}}</h4>
+                                    <span class="designation">{{ucwords($vendor_title)}}</span>
                                 </div>
                                 <ul class="social-list pull-right clearfix">
                                     <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -41,12 +41,12 @@
                                 </ul>
                             </div>
                             <div class="text">
-                                <p>{{$venue->additional_details}}</p>
+                                <p>{{$vendor->additional_details}}</p>
                             </div>
                             <ul class="info clearfix mr-0">
-                                <li><i class="fab fa fa-envelope"></i><a href="mailto:{{$venue->venue->user->name}}">{{$venue->venue->user->name}}</a>
+                                <li><i class="fab fa fa-envelope"></i><a href="mailto:{{$vendor->vendor->user->name}}">{{$vendor->vendor->user->name}}</a>
                                 </li>
-                                <li><i class="fab fa fa-phone"></i><a href="tel:">{{$venue->venue->user->contact_number}}</a></li>
+                                <li><i class="fab fa fa-phone"></i><a href="tel:">{{$vendor->vendor->user->contact_number}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
 {{--                                        <div class="deals-block-one">--}}
 {{--                                            <div class="inner-box">--}}
 {{--                                                <div class="image-box">--}}
-{{--                                                    <figure class="image"><img src="{{asset('assets/web/images/venues/107.jpg')}}"--}}
+{{--                                                    <figure class="image"><img src="{{asset('assets/web/images/vendors/107.jpg')}}"--}}
 {{--                                                                               alt="" style="width: 320px!important; height: 330px!important;"></figure>--}}
 {{--                                                    <div class="batch"><i class="icon-11"></i></div>--}}
 {{--                                                    <span class="category">Featured</span>--}}
@@ -144,7 +144,7 @@
 {{--                                                    <div class="inner-box">--}}
 {{--                                                        <div class="image-box">--}}
 {{--                                                            <figure class="image"><img--}}
-{{--                                                                        src="{{asset('assets/web/images/venues/107.jpg')}}"--}}
+{{--                                                                        src="{{asset('assets/web/images/vendors/107.jpg')}}"--}}
 {{--                                                                        alt=""></figure>--}}
 {{--                                                            <div class="batch"><i class="icon-11"></i></div>--}}
 {{--                                                            <span class="category">Featured</span>--}}
@@ -199,7 +199,7 @@
 {{--                                        <div class="deals-block-one">--}}
 {{--                                            <div class="inner-box">--}}
 {{--                                                <div class="image-box">--}}
-{{--                                                    <figure class="image"><img src="{{asset('assets/web/images/venues/107.jpg')}}"--}}
+{{--                                                    <figure class="image"><img src="{{asset('assets/web/images/vendors/107.jpg')}}"--}}
 {{--                                                                               alt=""></figure>--}}
 {{--                                                    <div class="batch"><i class="icon-11"></i></div>--}}
 {{--                                                    <span class="category">Featured</span>--}}
@@ -208,7 +208,7 @@
 {{--                                                </div>--}}
 {{--                                                <div class="lower-content">--}}
 {{--                                                    <div class="title-text"><h4><a href="property-details.html">Villa on--}}
-{{--                                                                Grand Avenue</a></h4></div>--}}
+{{--                                                                Grand Avendor</a></h4></div>--}}
 {{--                                                    <div class="price-box clearfix">--}}
 {{--                                                        <div class="price-info pull-left">--}}
 {{--                                                            <h6>Start From</h6>--}}
@@ -564,7 +564,7 @@
 {{--                                                </div>--}}
 {{--                                                <div class="lower-content">--}}
 {{--                                                    <div class="title-text"><h4><a href="property-details.html">Villa on--}}
-{{--                                                                Grand Avenue</a></h4></div>--}}
+{{--                                                                Grand Avendor</a></h4></div>--}}
 {{--                                                    <div class="price-box clearfix">--}}
 {{--                                                        <div class="price-info pull-left">--}}
 {{--                                                            <h6>Start From</h6>--}}
