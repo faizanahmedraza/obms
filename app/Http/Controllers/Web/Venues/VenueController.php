@@ -17,7 +17,7 @@ class VenueController extends Controller
         return view('web.venues.index',compact('venues','venue_title'));
     }
 
-    public function show($id,$param)
+    public function show($param,$id)
     {
         $venue_title = ucwords($param);
         $venue = VenueService::with(['venue','venue.user'])->where('id',$id)->where('venue_type',strtolower($param))->firstOrFail();

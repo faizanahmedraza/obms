@@ -5,7 +5,7 @@
 
 @section('content')
     <!--Page Title-->
-    <section class="page-title centred" style="background-image: url({{$venue->image}});">
+    <section class="page-title centred" style="background-image: url(/assets/web/images/banner/banner_2.jpg);">
         <div class="auto-container">
             <div class="content-box clearfix">
                 <h1>{{$venue_title}} Details</h1>
@@ -25,7 +25,7 @@
             <div class="agent-details-content">
                 <div class="agents-block-one">
                     <div class="inner-box mr-0">
-                        <iframe width="100%" height="583" src="{{$venue->price_per_hour}}"
+                        <iframe width="100%" height="583" src="{{$venue->virtual_tour}}"
                                 frameborder="0" allowfullscreen=""
                                 allow="vr" data-uw-styling-context="true"></iframe>
                         <div class="content-box pl-0">

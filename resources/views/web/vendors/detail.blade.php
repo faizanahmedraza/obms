@@ -5,7 +5,7 @@
 
 @section('content')
     <!--Page Title-->
-    <section class="page-title centred" style="background-image: url({{$vendor->image}});">
+    <section class="page-title centred" style="background-image: url(/assets/web/images/banner/banner_2.jpg);">
         <div class="auto-container">
             <div class="content-box clearfix">
                 <h1>{{$vendor_title}} Details</h1>
@@ -25,9 +25,7 @@
             <div class="agent-details-content">
                 <div class="agents-block-one">
                     <div class="inner-box mr-0">
-                        <iframe width="100%" height="583" src="{{$vendor->price_per_hour}}"
-                                frameborder="0" allowfullscreen=""
-                                allow="vr" data-uw-styling-context="true"></iframe>
+                        <img src=""/>
                         <div class="content-box pl-0">
                             <div class="upper clearfix">
                                 <div class="title-inner pull-left">

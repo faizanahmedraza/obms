@@ -139,7 +139,7 @@
                                         <div class="agents-block-two">
                                             <div class="inner-box">
                                                 <figure class="image-box"><img
-                                                            src="{{$venue->image}}"
+                                                            src="/assets/web/images/banner/banner_2.jpg"
                                                             style="width: 270px!important; height: 330px!important;"
                                                             alt=""></figure>
                                                 <div class="content-box">
