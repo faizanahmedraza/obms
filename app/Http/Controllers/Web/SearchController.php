@@ -12,7 +12,7 @@ class SearchController extends Controller
 {
     public function index(Request $request)
     {
-        $venues = VenueService::with(['venue','venue.user'])->where('venue_name', 'like', '%' .trim($request->search).'%')->get();
+        $venues = VenueService::with(['venue','venue.user'])->whereRaw('TRIM(LOWER(venue_name)) LIKE  ?','%'.trim($request->search).'%')->get();
         return view('web.search',compact('venues'));
     }
 }

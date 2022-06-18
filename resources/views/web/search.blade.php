@@ -59,9 +59,9 @@
                                                 <div class="upper clearfix">
                                                     <div class="title-inner pull-left">
                                                         <h4>
-                                                            <a href="{{route('web.venues.detail',['param' => $venue_title,'id' => $venue->id])}}">{{$venue->venue_name}}</a>
+                                                            <a href="{{route('web.venues.detail',['param' => $venue->venue_type,'id' => $venue->id])}}">{{$venue->venue_name}}</a>
                                                         </h4>
-                                                        <span class="designation">{{ucwords($venue_title)}}</span>
+                                                        <span class="designation">{{ucwords($venue->venue_type)}}</span>
                                                     </div>
                                                     <ul class="social-list pull-right clearfix">
                                                         <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
@@ -81,7 +81,7 @@
                                                     </li>
                                                 </ul>
                                                 <div class="btn-box">
-                                                    <a href="{{route('web.venues.detail',['param' => $venue_title,'id' => $venue->id])}}"
+                                                    <a href="{{route('web.venues.detail',['param' => $venue->venue_type,'id' => $venue->id])}}"
                                                        class="theme-btn btn-two">View Detail</a>
                                                 </div>
                                             </div>
@@ -102,8 +102,8 @@
                                                             alt=""></figure>
                                                 <div class="content-box">
                                                     <div class="title-inner">
-                                                        <h4><a href="{{route('web.venues.detail',['param' => $venue_title,'id' => $venue->id])}}">{{$venue->venue_name}}</a></h4>
-                                                        <span class="designation">{{ucwords($venue_title)}}</span>
+                                                        <h4><a href="{{route('web.venues.detail',['param' => $venue->venue_type,'id' => $venue->id])}}">{{$venue->venue_name}}</a></h4>
+                                                        <span class="designation">{{ucwords($venue->venue_type)}}</span>
                                                     </div>
                                                     <div class="text">
                                                         <p>{{$venue->additional_details}}</p>
@@ -115,7 +115,7 @@
                                                         <li><i class="fab fa fa-phone"></i><a href="tel:{{$venue->venue->user->contact_number}}">{{$venue->venue->user->contact_number}}</a></li>
                                                     </ul>
                                                     <div class="btn-box">
-                                                        <a href="" class="theme-btn btn-two">{{route('web.venues.detail',['param' => $venue_title,'id' => $venue->id])}}</a>
+                                                        <a href="" class="theme-btn btn-two">{{route('web.venues.detail',['param' => $venue->venue_type,'id' => $venue->id])}}</a>
                                                     </div>
                                                 </div>
                                             </div>
