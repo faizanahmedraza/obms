@@ -129,6 +129,8 @@ Route::group(['namespace' => 'Cms'], function () {
                         ]
                     ]
                 );
+                Route::get('/verification/{token}', 'CreatePasswordController@verifyToken')->name('verification');
+                Route::put('/verification/{token}', 'CreatePasswordController@createPassword')->name('verification.store');
             });
 
             //Protected Routes

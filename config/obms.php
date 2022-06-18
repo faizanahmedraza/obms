@@ -44,5 +44,18 @@ return [
         'venues_create',
         'venues_update',
         'venues_delete',
+    ],
+
+    'common_permissions' => [
+        'venue_bookings_all',
+        'venue_bookings_read',
+        'venue_bookings_create',
+        'venue_bookings_update',
+        'venue_bookings_delete',
+        'vendor_bookings_all',
+        'vendor_bookings_read',
+        'vendor_bookings_create',
+        'vendor_bookings_update',
+        'vendor_bookings_delete',
     ]
 ];

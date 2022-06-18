@@ -27,13 +27,13 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="{{route('admin.vendor-bookings.update',['id' => $vendor->id])}}"
+                                <form method="POST" action="{{route('vendor-bookings.update',['id' => $booking->id])}}"
                                       enctype="multipart/form-data">
                                     @method('PUT')
                                     @csrf
                                     @if (session()->has('error'))
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <strong>Whoops!</strong> {{session()->get('error')}}
+                                            <strong>Success!</strong> {{session()->get('error')}}
                                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                     aria-label="Close"></button>
                                         </div>
@@ -52,21 +52,23 @@
                                     @endif
                                     <div class="card-body">
                                         <div class="row mb-2">
-                                            <div class="col-md-6">
-                                                <label for="vendor">Customer</label>
+                                            @if(auth()->user()->roles->first()->name != 'Customer')
+                                            <div class="col-md-12">
+                                                <label for="customer">Customer</label>
                                                 <select class="form-control" name="customer" id="customer">
                                                     <option value="">Select</option>
                                                     @foreach($customers as $val)
-                                                        <option value="{{$val->id}}" {{old('customer') == $val->id ? 'selected' : ""}}>{{ucwords($val->name)}}</option>
+                                                        <option value="{{$val->id}}" {{old('customer',$booking->customer_id) == $val->id ? 'selected' : ""}}>{{ucwords($val->name)}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-md-6">
+                                            @endif
+                                            <div class="col-md-12">
                                                 <label for="vendor">Vendor Service</label>
                                                 <select class="form-control" name="vendor" id="vendor">
                                                     <option value="">Select</option>
                                                     @foreach($vendors as $val)
-                                                        <option value="{{$val->id}}" {{old('vendor') == $val->id ? 'selected' : ""}}>{{ucwords($val->service_name)}} -- ({{ucwords($val->service_type)}})</option>
+                                                        <option value="{{$val->id}}" {{old('vendor',$booking->vendor_service_id) == $val->id ? 'selected' : ""}}>{{ucwords($val->service_name)}} -- ({{ucwords($val->service_type)}})</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -79,7 +81,7 @@
                                                     <input type="date" class="form-control" id="date"
                                                            name="date"
                                                            placeholder="Select Day"
-                                                           value="{{old('date')}}">
+                                                           value="{{old('date',$booking->date)}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -88,7 +90,7 @@
                                                     <input type="time" class="form-control" id="start_time"
                                                            name="start_time"
                                                            placeholder="Select Time"
-                                                           value="{{old('start_time')}}">
+                                                           value="{{old('start_time',$booking->start_time)}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -100,7 +102,7 @@
                                                     <input type="time" class="form-control" id="end_time"
                                                            name="end_time"
                                                            placeholder="Select Time"
-                                                           value="{{old('end_time')}}">
+                                                           value="{{old('end_time',$booking->end_time)}}">
                                                 </div>
                                             </div>
                                         </div>

@@ -12,7 +12,7 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <h5>Vendor Service Bookings</h5>
-                            <a class="btn btn-primary" href="{{route('admin.vendor-bookings.create')}}">Create +</a>
+                            <a class="btn btn-primary" href="{{route('vendor-bookings.create')}}">Create +</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -46,14 +46,14 @@
                                 @forelse($bookings as $booking)
                                     <tr>
                                         <td>{{ucwords($booking->vendorService->service_name)}}</td>
-                                        <td>{{ucwords($booking->customer->name)}}</td>
+                                        <td>{{ucwords($booking->customer->user->name)}}</td>
                                         <td>${{number_format($booking->total_price,2)}}</td>
-                                        <td>{{$booking->date->diffForHumans()}}</td>
+                                        <td>{{$booking->date}}</td>
                                         <td>{{$booking->created_at->diffForHumans()}}</td>
                                         <td>
-                                            <a href="{{route('admin.vendor-bookings.show',['id' => $booking->id])}}"
+                                            <a href="{{route('vendor-bookings.show',['id' => $booking->id])}}"
                                                style="cursor: pointer;"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            <a href="{{route('admin.vendor-bookings.edit',['id' => $booking->id])}}"
+                                            <a href="{{route('vendor-bookings.edit',['id' => $booking->id])}}"
                                                style="cursor: pointer;"><i class="fa fa-pencil-square-o"
                                                                            aria-hidden="true"></i></a>
                                             <a href="javascript:void(0);"
@@ -91,7 +91,7 @@
             })
                 .then(willDelete => {
                     if (willDelete) {
-                        axios.delete(`/admin/vendor-bookings/${id}/delete`)
+                        axios.delete(`/vendor-bookings/${id}/delete`)
                             .then(response => {
                                 swal(response.data.msg, {
                                     icon: "success",

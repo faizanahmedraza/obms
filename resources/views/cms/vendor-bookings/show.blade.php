@@ -28,23 +28,17 @@
                             </div>
                             <div class="card-body">
                                 <div class="row mb-2">
-                                    <div class="col-md-6">
-                                        <label for="vendor">Customer</label>
-                                        <select class="form-control" name="customer" id="customer">
-                                            <option value="">Select</option>
-                                            @foreach($customers as $val)
-                                                <option value="{{$val->id}}" {{old('customer') == $val->id ? 'selected' : ""}}>{{ucwords($val->name)}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
+                                    @if(auth()->user()->roles->first()->name != 'Customer')
+                                        <div class="col-md-12">
+                                            <label for="vendor">Customer</label>
+                                            <input type="text" class="form-control"
+                                                   value="{{$booking->customer->user->name}}" disabled>
+                                        </div>
+                                    @endif
+                                    <div class="col-md-12">
                                         <label for="vendor">Vendor Service</label>
-                                        <select class="form-control" name="vendor" id="vendor">
-                                            <option value="">Select</option>
-                                            @foreach($vendors as $val)
-                                                <option value="{{$val->id}}" {{old('vendor') == $val->id ? 'selected' : ""}}>{{ucwords($val->service_name)}} -- ({{ucwords($val->service_type)}})</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" class="form-control"
+                                               value="{{$booking->vendorService->vendor->service_name}}" disabled>
                                     </div>
                                 </div>
 
@@ -55,7 +49,7 @@
                                             <input type="date" class="form-control" id="date"
                                                    name="date"
                                                    placeholder="Select Day"
-                                                   value="{{old('date',$vendor->date)}}">
+                                                   value="{{old('date',$booking->date)}}" disabled>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -64,7 +58,7 @@
                                             <input type="time" class="form-control" id="start_time"
                                                    name="start_time"
                                                    placeholder="Select Time"
-                                                   value="{{old('start_time',$vendor->start_time)}}">
+                                                   value="{{old('start_time',$booking->start_time)}}" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -76,7 +70,7 @@
                                             <input type="time" class="form-control" id="end_time"
                                                    name="end_time"
                                                    placeholder="Select Time"
-                                                   value="{{old('end_time',$vendor->end_time)}}">
+                                                   value="{{old('end_time',$booking->end_time)}}" disabled>
                                         </div>
                                     </div>
                                 </div>

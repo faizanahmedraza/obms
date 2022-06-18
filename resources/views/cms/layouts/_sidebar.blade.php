@@ -55,7 +55,7 @@
                             </li>
                         @endcan
                     @endcan
-                    @if(in_array(auth()->user()->roles->first()->name,['Vendor','Venue']))
+                    @if(in_array(auth()->user()->roles->first()->name,['Vendor','Venue','Customer']))
                         @can('services_all')
                             <li class="dropdown"><a
                                         class="nav-link menu-title {{ request()->is('vendor/vendors*') ? 'active' : '' }}"
@@ -77,6 +77,30 @@
                                     <li>
                                         <a href="{{route('venue.venues.index')}}" {{ request()->is('venue/venues*') ? 'active' : '' }}>Venue
                                             Services</a></li>
+                                </ul>
+                            </li>
+                        @endcan
+                        @can('venue_bookings_all')
+                            <li class="dropdown"><a
+                                        class="nav-link menu-title {{ request()->is('venue-bookings*') ? 'active' : '' }}"
+                                        href="javascript:void(0)"><i
+                                            data-feather="layers"></i><span>Venue Bookings</span></a>
+                                <ul class="nav-submenu menu-content">
+                                    <li>
+                                        <a href="{{route('venue-bookings.index')}}" {{ request()->is('venue-bookings*') ? 'active' : '' }}>Venue
+                                            Bookings</a></li>
+                                </ul>
+                            </li>
+                        @endcan
+                        @can('vendor_bookings_all')
+                            <li class="dropdown"><a
+                                        class="nav-link menu-title {{ request()->is('vendor-bookings*') ? 'active' : '' }}"
+                                        href="javascript:void(0)"><i
+                                            data-feather="layers"></i><span>Vendor Bookings</span></a>
+                                <ul class="nav-submenu menu-content">
+                                    <li>
+                                        <a href="{{route('vendor-bookings.index')}}" {{ request()->is('vendor-bookings*') ? 'active' : '' }}>Vendor
+                                            Bookings</a></li>
                                 </ul>
                             </li>
                         @endcan
@@ -112,7 +136,8 @@
                                             data-feather="layers"></i><span>Venue Bookings</span></a>
                                 <ul class="nav-submenu menu-content">
                                     <li>
-                                        <a href="{{route('admin.venue-bookings.index')}}" {{ request()->is('admin/venue-bookings*') ? 'active' : '' }}>Venue Bookings</a></li>
+                                        <a href="{{route('admin.venue-bookings.index')}}" {{ request()->is('admin/venue-bookings*') ? 'active' : '' }}>Venue
+                                            Bookings</a></li>
                                 </ul>
                             </li>
                         @endcan
@@ -123,7 +148,8 @@
                                             data-feather="layers"></i><span>Vendor Bookings</span></a>
                                 <ul class="nav-submenu menu-content">
                                     <li>
-                                        <a href="{{route('admin.vendor-bookings.index')}}" {{ request()->is('admin/vendor-bookings*') ? 'active' : '' }}>Vendor Bookings</a></li>
+                                        <a href="{{route('admin.vendor-bookings.index')}}" {{ request()->is('admin/vendor-bookings*') ? 'active' : '' }}>Vendor
+                                            Bookings</a></li>
                                 </ul>
                             </li>
                         @endcan

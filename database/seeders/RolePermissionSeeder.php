@@ -35,7 +35,7 @@ class RolePermissionSeeder extends Seeder
 
         PermissionHeader::insert($permissionHeaders->toArray());
 
-        $arrayOfPermissionNames = array_merge(config('obms.admin_permissions'), config('obms.vendor_permissions'), config('obms.venue_permissions'));
+        $arrayOfPermissionNames = array_merge(config('obms.admin_permissions'), config('obms.vendor_permissions'), config('obms.venue_permissions'),config('obms.common_permissions'));
 
         $headerId = 1;
         $permissions = collect($arrayOfPermissionNames)->map(function ($permission) use ($headerId) {
@@ -59,10 +59,13 @@ class RolePermissionSeeder extends Seeder
         $adminRole->syncPermissions($arrayOfPermissionNames);
 
         $vendorRole = Role::firstOrCreate(['name' => config('obms.private_roles')[2]]);
-        $vendorRole->syncPermissions(config('obms.vendor_permissions'));
+        $vendorRole->syncPermissions(array_merge(config('obms.vendor_permissions'),config('obms.common_permissions')));
 
         $venueRole = Role::firstOrCreate(['name' => config('obms.private_roles')[3]]);
-        $venueRole->syncPermissions(config('obms.venue_permissions'));
+        $venueRole->syncPermissions(array_merge(config('obms.venue_permissions'),config('obms.common_permissions')));
+
+        $customerRole = Role::firstOrCreate(['name' => config('obms.private_roles')[4]]);
+        $customerRole->syncPermissions(config('obms.common_permissions'));
 
         DB::commit();
     }

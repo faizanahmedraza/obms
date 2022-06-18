@@ -19,43 +19,48 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 
 class VenueBookingController extends Controller
 {
     private $module;
 
-//    public function __construct()
-//    {
-//        $this->module = 'venue_bookings';
-//        $ULP = '|' . $this->module . '_all|access_all'; //UPPER LEVEL PERMISSIONS
-//        $this->middleware('permission:' . $this->module . '_read' . $ULP, ['only' => ['index', 'show']]);
-//        $this->middleware('permission:' . $this->module . '_create' . $ULP, ['only' => ['create', 'store']]);
-//        $this->middleware('permission:' . $this->module . '_update' . $ULP, ['only' => ['edit', 'update']]);
-//        $this->middleware('permission:' . $this->module . '_delete' . $ULP, ['only' => ['destroy']]);
-//    }
+    public function __construct()
+    {
+        $this->module = 'venue_bookings';
+        $ULP = '|' . $this->module . '_all|access_all'; //UPPER LEVEL PERMISSIONS
+        $this->middleware('permission:' . $this->module . '_read' . $ULP, ['only' => ['index', 'show']]);
+        $this->middleware('permission:' . $this->module . '_create' . $ULP, ['only' => ['create', 'store']]);
+        $this->middleware('permission:' . $this->module . '_update' . $ULP, ['only' => ['edit', 'update']]);
+        $this->middleware('permission:' . $this->module . '_delete' . $ULP, ['only' => ['destroy']]);
+    }
 
     public function index()
     {
         $bookings = VenueBooking::latest()->get();
-        return view('cms.admin.venue-bookings.index', compact('bookings'));
+        return view('cms.venue-bookings.index', compact('bookings'));
     }
 
     public function create()
     {
         $customers = User::has('customer')->get();
         $venues = VenueService::latest()->get();
-        return view('cms.admin.venue-bookings.create', compact('customers', 'venues'));
+        return view('cms.venue-bookings.create', compact('customers', 'venues'));
     }
 
     public function store(Request $request)
     {
         $rules = [
-            'customer' => 'required|in:' . implode(',', User::has('customer')->pluck('id')->toArray()),
+            'customer' => [
+                Rule::requiredIf(function () use ($request) {
+                    return $request->user()->roles->first()->name != "Customer";
+                })
+                , 'in:' . implode(',', User::has('customer')->pluck('id')->toArray())],
             'venue' => 'required|in:' . implode(',', VenueService::pluck('id')->toArray()),
             'date' => 'required|date',
             'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:time_start',
+            'end_time' => 'required|date_format:H:i|after:start_time',
         ];
 
         $data = [];
@@ -71,29 +76,35 @@ class VenueBookingController extends Controller
 
         DB::beginTransaction();
 
-        $venue = VenueService::where('id',(int)$request->venue)->first();
+        $venue = VenueService::where('id', (int)$request->venue)->first();
+
+        if (empty($venue->price_per_hour)) {
+            return back()->withErrors(['errors' => 'Kindly submit complete details of this venue before booking'])->withInput();
+        }
+
         $requestStartTime = Carbon::parse($request->start_time);
         $requestEndTime = Carbon::parse($request->end_time);
         $differenceInHours = $requestEndTime->diffInHours($requestStartTime);
-        $totalPrice = $differenceInHours * $venue->price_per_hour;
+        $hours = $differenceInHours <= 0 ? 2 : $differenceInHours;
+        $totalPrice = $hours * $venue->price_per_hour;
 
         $data['customer_id'] = (int)$request->customer;
         $data['venue_service_id'] = $venue->id;
         $data['date'] = $request->date;
-        $data['start_time'] = $request->date;
-        $data['end_time'] = $request->date;
+        $data['start_time'] = $request->start_time;
+        $data['end_time'] = $request->end_time;
         $data['total_price'] = $totalPrice;
 
-        VenueService::create($data);
+        VenueBooking::create($data);
 
         DB::commit();
-        return redirect()->route('admin.venue-bookings.index')->with('success', 'Successfully added.');
+        return redirect()->route('venue-bookings.index')->with('success', 'Successfully added.');
     }
 
     public function show($id)
     {
-        $booking = VenueBooking::with(['venueService', 'venueService.venue'])->where('id', $id)->firstOrFail();
-        return view('cms.admin.venue-bookings.show', compact('booking'));
+        $booking = VenueBooking::with(['venueService', 'venueService.venue', 'customer', 'customer.user'])->where('id', $id)->firstOrFail();
+        return view('cms.venue-bookings.show', compact('booking'));
     }
 
     public function edit($id)
@@ -101,18 +112,22 @@ class VenueBookingController extends Controller
         $booking = VenueBooking::with(['venueService', 'venueService.venue'])->where('id', $id)->firstOrFail();
         $customers = User::has('customer')->get();
         $venues = VenueService::latest()->get();
-        return view('cms.admin.venue-bookings.edit', compact('booking', 'customers', 'venues'));
+        return view('cms.venue-bookings.edit', compact('booking', 'customers', 'venues'));
     }
 
     public function update($id, Request $request)
     {
         $booking = VenueBooking::with(['venueService', 'venueService.venue'])->where('id', $id)->firstOrFail();
         $rules = [
-            'customer' => 'required|in:' . implode(',', User::has('customer')->pluck('id')->toArray()),
+            'customer' => [
+                Rule::requiredIf(function () use ($request) {
+                    return $request->user()->roles->first()->name != "Customer";
+                })
+                , 'in:' . implode(',', User::has('customer')->pluck('id')->toArray())],
             'venue' => 'required|in:' . implode(',', VenueService::pluck('id')->toArray()),
             'date' => 'required|date',
             'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:time_start',
+            'end_time' => 'required|date_format:H:i|after:start_time',
         ];
 
         $data = [];
@@ -126,22 +141,23 @@ class VenueBookingController extends Controller
                 ->withInput();
         }
 
-        $venue = VenueService::where('id',(int)$request->venue)->first();
+        $venue = VenueService::where('id', (int)$request->venue)->first();
         $requestStartTime = Carbon::parse($request->start_time);
         $requestEndTime = Carbon::parse($request->end_time);
         $differenceInHours = $requestEndTime->diffInHours($requestStartTime);
-        $totalPrice = $differenceInHours * $venue->price_per_hour;
+        $hours = $differenceInHours <= 0 ? 2 : $differenceInHours;
+        $totalPrice = $hours * $venue->price_per_hour;
 
         $data['customer_id'] = (int)$request->customer;
         $data['venue_service_id'] = $venue->id;
         $data['date'] = $request->date;
-        $data['start_time'] = $request->date;
-        $data['end_time'] = $request->date;
+        $data['start_time'] = $request->start_time;
+        $data['end_time'] = $request->end_time;
         $data['total_price'] = $totalPrice;
 
         $booking->update($data);
 
-        return redirect()->route('admin.venue-bookings.index')->with('success', 'Successfully updated.');
+        return redirect()->route('venue-bookings.index')->with('success', 'Successfully updated.');
     }
 
     public function destroy($id)

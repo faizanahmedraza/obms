@@ -159,7 +159,11 @@ class UserController extends Controller
         $tryError = '';
         try {
             $emailData = new \stdClass();
-            $emailData->verification_link = config('app.url') . "/verification/" . $user->verification_token;
+            if (in_array($role->name, ['Vendor', 'Customer', 'Venue'])) {
+                $emailData->verification_link = config('app.url') . "/verification/" . $user->verification_token;
+            } else {
+                $emailData->verification_link = config('app.url') . "/admin/verification/" . $user->verification_token;
+            }
             Mail::to($user->email)->send(new Verification($emailData));
         } catch (\Exception $e) {
             $tryError = ' but ' . $e->getMessage();
@@ -244,13 +248,13 @@ class UserController extends Controller
         $role = Role::where('id', (int)$request->role)->firstOrFail();
 
         if ($user->roles->first()->name === 'Vendor') {
-            $vendor = Vendor::where('user_id',$user->id)->first();
+            $vendor = Vendor::where('user_id', $user->id)->first();
             $vendor->delete();
         } else if ($user->roles->first()->name === 'Customer') {
-            $customer = Customer::where('user_id',$user->id)->first();
+            $customer = Customer::where('user_id', $user->id)->first();
             $customer->delete();
         } else if ($user->roles->first()->name === 'Venue') {
-            $venue = Venue::where('user_id',$user->id)->first();
+            $venue = Venue::where('user_id', $user->id)->first();
             $venue->delete();
         }
 

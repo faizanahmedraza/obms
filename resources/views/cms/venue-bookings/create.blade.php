@@ -22,17 +22,16 @@
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
                                     <h4 class="card-title">Create Venue Booking</h4>
-                                    <a href="javascript:void(0)" onclick="window.history.go(-1)"
+                                    <a href="{{route('venue-bookings.index')}}"
                                        class="btn btn-primary">← Back</a>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="{{route('admin.venue-bookings.store')}}"
-                                      enctype="multipart/form-data">
+                                <form method="POST" action="{{route('venue-bookings.store')}}">
                                     @csrf
                                     @if (session()->has('error'))
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <strong>Whoops!</strong> {{session()->get('error')}}
+                                            <strong>Success!</strong> {{session()->get('error')}}
                                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                     aria-label="Close"></button>
                                         </div>
@@ -51,21 +50,25 @@
                                     @endif
                                     <div class="card-body">
                                         <div class="row mb-2">
-                                            <div class="col-md-6">
-                                                <label for="vendor">Customer</label>
-                                                <select class="form-control" name="vendor" id="vendor">
-                                                    <option value="">Select</option>
-                                                    @foreach($customers as $val)
-                                                        <option value="{{$val->id}}" {{old('vendor') == $val->id ? 'selected' : ""}}>{{ucwords($val->name)}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="vendor">Venue</label>
+                                            @if(auth()->user()->roles->first()->name != 'Customer')
+                                                <div class="col-md-12">
+                                                    <label for="vendor">Customer</label>
+                                                    <select class="form-control" name="customer" id="customer">
+                                                        <option value="">Select</option>
+                                                        @foreach($customers as $val)
+                                                            <option value="{{$val->id}}" {{old('customer') == $val->id ? 'selected' : ""}}>{{ucwords($val->name)}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            @endif
+                                            <div class="col-md-12">
+                                                <label for="venue">Venue</label>
                                                 <select class="form-control" name="venue" id="venue">
                                                     <option value="">Select</option>
                                                     @foreach($venues as $val)
-                                                        <option value="{{$val->id}}" {{old('venue') == $val->id ? 'selected' : ""}}>{{ucwords($val->venue_name)}} -- ({{ucwords($val->venue_type)}})</option>
+                                                        <option value="{{$val->id}}" {{old('venue') == $val->id ? 'selected' : ""}}>{{ucwords($val->venue_name)}}
+                                                            -- ({{ucwords($val->venue_type)}})
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
